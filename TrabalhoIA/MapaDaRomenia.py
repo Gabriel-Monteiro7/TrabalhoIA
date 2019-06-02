@@ -77,7 +77,7 @@ class MapaDaRomenia:
         self.Bucharest = No("Bucharest", None)
 
         insert(self.Bucharest, No("Urziceni", self.Bucharest, 85))
-        insert(self.Bucharest, No("Giurgiu", self.Bucharest, 90))
+        insert(self.Bucharest, No("Giurgia", self.Bucharest, 90))
         insert(self.Bucharest, No("Pitesti", self.Bucharest, 101))
         insert(self.Bucharest, No("Fagaras", self.Bucharest, 211))
 
