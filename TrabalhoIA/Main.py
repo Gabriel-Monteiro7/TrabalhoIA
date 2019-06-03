@@ -27,7 +27,7 @@ def gerarMatriz(quant):
     return matriz
 
 
-def teste(matriz, linha, coluna):
+def testeDeColisao(matriz, linha, coluna):
     col = []
     lin = []
     principal = []
@@ -65,103 +65,85 @@ def teste(matriz, linha, coluna):
     return vetor
 
 
+def expande(estadoAtual,linha):
+    vetor = []
+    for coluna in range(quant):
+        isSalve = True
+        if(estadoAtual.estado[coluna][linha] == "*"):
+            aux = testeDeColisao(estadoAtual.estado, coluna, linha)
+            for item in aux:
+                if("G" in item):
+                    isSalve = False
+                    break
+            if(isSalve):
+                aux = deepcopy(estadoAtual.estado)
+                aux[coluna][linha] = "G"
+                vetor.append(No(aux, estadoAtual))
+    return vetor
+
+
+def sucessoraLargura(estadoAtual,linha):
+    aux = expande(estadoAtual, linha)
+    for item in aux:
+        borda.append(No(item.estado, estadoAtual))
+    return borda
+
+
+def sucessoraProfundidade(estadoAtual,linha):
+    aux = expande(estadoAtual, linha)
+    for item in aux:
+        borda.insert(0,No(item.estado, estadoAtual))
+    return borda
+
+
+def testeDeObjetividade(estadoAtual, combinacoes,borda,tipoBusca):
+    if(estadoAtual.getProfundidade() == quant):
+        aux = True
+        for item in combinacoes:
+            if(item.estado == estadoAtual.estado):  # rever
+                return False
+        if(aux):
+            combinacoes.append(estadoAtual)
+            if(tipoBusca==1):
+                for item in borda:
+                    combinacoes.append(item)
+            return True
+
+
+
+def buscaLocal(estadoInicial, tipoBusca):
+    combinacoes = []
+    borda = estadoInicial
+    linha = 0
+    while(linha <= quant):
+        estadoAtual = borda[0]
+        borda.pop(0)
+        visitados.append(estadoAtual)
+        count = 0
+        for item in estadoAtual.estado:
+            if("G" in item):
+                count += 1
+        linha = count
+
+        if(testeDeObjetividade(estadoAtual, combinacoes,borda,tipoBusca)):
+            return combinacoes
+        if(tipoBusca == 1):
+            borda = sucessoraLargura(estadoAtual,linha)
+        else:
+            borda = sucessoraProfundidade(estadoAtual, linha)
+
 quant = 8
 matriz = No(gerarMatriz(quant), None)
 borda = []
-bordaMaior = []
 borda.append(matriz)
-isSalve = True
+visitados = []
+resultado = buscaLocal(borda,1)
 
+print("Quantidade de resultados:",resultado.__len__())
 
-def expande(valor):
-    vetor = []
-    for item in valor.filho:
-        vetor.insert(0, item)
-    return vetor
-
-linha=0
-    
-while(linha<=quant):
-        if(borda==[]):
-            borda.append(valor.pai)
-        valor = borda[0]
-        borda.pop(0)
-        for item in valor.estado:
-            print(item,linha)
-        print("")
-        count=0
-        if(valor.getProfundidade() == quant):
-            aux = True
-            for item in bordaMaior:
-                if(item.estado == valor.estado):
-                    aux = False
-            if(aux):
-                bordaMaior.append(valor)
-                print("%i combinação encontrada" % bordaMaior.__len__())
-                for item in borda:
-                    bordaMaior.append(item)
-                        
-                break
-        for coluna in range(quant):
-            isSalve = True
-            if(valor.estado[coluna][linha] == "*"):
-                aux = teste(valor.estado, coluna, linha)
-                for item in aux:
-                    if("G" in item):
-                        isSalve = False
-                        break
-                if(isSalve):
-                    aux = deepcopy(valor.estado)
-                    aux[coluna][linha] = "G"
-                    borda.append(No(aux, valor))
-        for item in valor.estado:
-            if("G" in item):
-                count+=1
-        if(count==1+linha):
-            linha+=1
-        
-for item in borda[1].estado:
-    print(item)
-print("=",bordaMaior.__len__())
-while(bordaMaior[10]!=None):
-    for item in bordaMaior[10].estado:
+while(resultado[0]!=None):
+    print("Profundida:",resultado[0].getProfundidade())
+    for item in resultado[0].estado:
         print(item)
     print("")
-    bordaMaior[10] = bordaMaior[10].pai
-
-# for col in range(quant):
-#     for lin in range(quant):
-#         if(matriz[lin][col]==""):
-#             isSalve = True
-#             for interno in range(quant):
-#                 if(matriz[interno][lin] !="" or matriz[col][interno] != "" ):
-#                     if(col>lin):# sec prin
-#                         if(lin+interno<quant and col+lin<quant and (matriz[lin-interno+1][interno] != "" or matriz[lin+interno][interno] != "")):
-#                             isSalve = False
-#                             matriz[interno][lin] = "G"
-#                     elif(lin>col):
-#                         if(interno+col<quant and lin+col<quant and (matriz[lin-interno][interno] != "" or matriz[interno][lin-count+interno] != "")):
-#                             isSalve = False
-#                             matriz[interno][lin] = "G"
-#                     elif(col==lin):
-#                         if(col+lin<quant and (matriz[col+lin-interno][interno+1] != "" or matriz[interno][interno] != "")):
-#                             isSalve = False
-#                             matriz[interno][lin] = "G"
-
-
-#                     # if(col>lin):
-#                     #     if(col - lin == col-1 and matriz[col][interno] != "" and  col + lin == col+1  and matriz[col][interno] != ""):
-#                     #         isSalve = False
-#                     #         break
-#                     # elif(col<lin):
-#                     #      if(col + lin == quant and matriz[col][interno] != "" and  lin - col == interno-lin  and matriz[col][interno] != ""):
-#                     #         isSalve = False
-#                     #         break
-#                     # else:
-#                     #     if(lin == interno  and matriz[interno][lin] != "" and  lin == interno-lin  and  matriz[col][interno] != ""):
-#                     #         isSalve = False
-#                     #         break
-
-
-# print("Elemento na posicao [2,1]")
-# print(lin,col,principal)
+    resultado[0] = resultado[0].pai
