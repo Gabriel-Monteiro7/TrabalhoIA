@@ -71,58 +71,63 @@ borda = []
 bordaMaior = []
 borda.append(matriz)
 isSalve = True
+
+
 def expande(valor):
     vetor = []
     for item in valor.filho:
         vetor.insert(0, item)
     return vetor
 
-
-while(True):
-
-        if(borda == []):
+linha=0
+    
+while(linha<=quant):
+        if(borda==[]):
             borda.append(valor.pai)
         valor = borda[0]
         borda.pop(0)
-        for linha in range(quant):
-            for coluna in range(quant):
-                isSalve = True
-                if(valor.estado[linha][coluna] == "*"):
-                    aux = teste(valor.estado, linha, coluna)
-                    for item in aux:
-                        if("G" in item):
-                            isSalve = False
-                            break
-                    if(isSalve ):
-                        aux = deepcopy(valor.estado)
-                        aux[linha][coluna] = "G"
-                        borda.append(No(aux,valor))
+        for item in valor.estado:
+            print(item,linha)
+        print("")
+        count=0
+        if(valor.getProfundidade() == quant):
+            aux = True
+            for item in bordaMaior:
+                if(item.estado == valor.estado):
+                    aux = False
+            if(aux):
+                bordaMaior.append(valor)
+                print("%i combinação encontrada" % bordaMaior.__len__())
+                for item in borda:
+                    bordaMaior.append(item)
+                        
+                break
+        for coluna in range(quant):
+            isSalve = True
+            if(valor.estado[coluna][linha] == "*"):
+                aux = teste(valor.estado, coluna, linha)
+                for item in aux:
+                    if("G" in item):
+                        isSalve = False
                         break
-            if(valor.getProfundidade() == quant):
-                aux = True
-                for item in bordaMaior:
-                    if(item.estado==valor.estado):
-                        aux = False
-                if(aux):
-                    bordaMaior.append(valor)
-                    print("%i combinação encontrada"%bordaMaior.__len__())
-                    break    
-        if(bordaMaior.__len__()==5):
-            break
-
-
-
-print("")
-for item in bordaMaior:
-    for item2 in item.estado:
-        print(item2)
-    print("")
-while(bordaMaior[4].pai!=None):
-    for item in bordaMaior[4].estado:
+                if(isSalve):
+                    aux = deepcopy(valor.estado)
+                    aux[coluna][linha] = "G"
+                    borda.append(No(aux, valor))
+        for item in valor.estado:
+            if("G" in item):
+                count+=1
+        if(count==1+linha):
+            linha+=1
+        
+for item in borda[1].estado:
+    print(item)
+print("=",bordaMaior.__len__())
+while(bordaMaior[10]!=None):
+    for item in bordaMaior[10].estado:
         print(item)
     print("")
-    bordaMaior[4] = bordaMaior[4].pai
-
+    bordaMaior[10] = bordaMaior[10].pai
 
 # for col in range(quant):
 #     for lin in range(quant):
@@ -142,7 +147,7 @@ while(bordaMaior[4].pai!=None):
 #                         if(col+lin<quant and (matriz[col+lin-interno][interno+1] != "" or matriz[interno][interno] != "")):
 #                             isSalve = False
 #                             matriz[interno][lin] = "G"
-                    
+
 
 #                     # if(col>lin):
 #                     #     if(col - lin == col-1 and matriz[col][interno] != "" and  col + lin == col+1  and matriz[col][interno] != ""):
@@ -156,9 +161,7 @@ while(bordaMaior[4].pai!=None):
 #                     #     if(lin == interno  and matriz[interno][lin] != "" and  lin == interno-lin  and  matriz[col][interno] != ""):
 #                     #         isSalve = False
 #                     #         break
-   
 
 
-    
 # print("Elemento na posicao [2,1]")
 # print(lin,col,principal)
