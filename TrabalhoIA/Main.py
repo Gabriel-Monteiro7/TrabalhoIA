@@ -8,93 +8,120 @@ mapaRomenia = MapaDaRomenia()
 origem = mapaRomenia.Oradea.estado
 destino = mapaRomenia.Giurgiu.estado
 listaVisitados = []
-#1 == Largura #2 == Profundidade #3 == Custo Uniforme
-#ultimo parametro é o tipo de busca se for por profundidade 
-#[] = se for lista de visitados 
-#int se for limitado
-#Object se for interativa
+# 1 == Largura #2 == Profundidade #3 == Custo Uniforme
+# ultimo parametro é o tipo de busca se for por profundidade
+# [] = se for lista de visitados
+# int se for limitado
+# Object se for interativa
 # Problema(mapaRomenia.opcao(),origem,destino,2,[])
 
+
 def gerarMatriz(quant):
-    matriz =[]
+    matriz = []
     for c in range(quant):
         linha = []
         for l in range(quant):
             linha.append("*")
         matriz.append(linha)
-    
-    return matriz
-def teste(matriz,linha,coluna):
-    col=[]
-    lin=[]
-    principal=[]
-    secundaria =[]
-    linhas=linha
-    colunas=coluna
-    count =0
-    for item in matriz:
-        if(linha>coluna):
-            if((linha-coluna)+count+1<=quant):
-                principal.append(matriz[count+(linha-coluna)][count]) #achar a principal quando a linha>coluna
-        else:
-            if(coluna-linha+count+1<=quant):
-                principal.append(matriz[count][count+(coluna-linha)]) #achar a principal quando a coluna>linha
 
-        if(coluna+linha<quant):
-            if(count<=coluna+linha):
+    return matriz
+
+
+def teste(matriz, linha, coluna):
+    col = []
+    lin = []
+    principal = []
+    secundaria = []
+    linhas = linha
+    colunas = coluna
+    count = 0
+    for item in matriz:
+        if(linha > coluna):
+            if((linha-coluna)+count+1 <= quant):
+                # achar a principal quando a linha>coluna
+                principal.append(matriz[count+(linha-coluna)][count])
+        else:
+            if(coluna-linha+count+1 <= quant):
+                # achar a principal quando a coluna>linha
+                principal.append(matriz[count][count+(coluna-linha)])
+
+        if(coluna+linha < quant):
+            if(count <= coluna+linha):
                 colunaAux = coluna+linha-count
                 linhaAux = count
-                secundaria.append(matriz[linhaAux][colunaAux]) #achar a secundaria quando a soma da linha e coluna for menor que o grau da matriz
-        elif(coluna+linha>=quant):
-            if(count<(2*quant-linha-coluna-1)):
+                # achar a secundaria quando a soma da linha e coluna for menor que o grau da matriz
+                secundaria.append(matriz[linhaAux][colunaAux])
+        elif(coluna+linha >= quant):
+            if(count < (2*quant-linha-coluna-1)):
                 colunaAux = linha+coluna-quant+count+1
                 linhaAux = quant-1-count
-                secundaria.append(matriz[linhaAux][colunaAux])#achar a secundaria quando a soma da linha e coluna for maior que o grau da matriz
-        if(count==linhas):
-            lin = item #achar a linha da posicao
-        count+=1
-        col.append(item[colunas]) #achar a coluna da posicao
-    vetor = [lin,col,principal,secundaria]
+                # achar a secundaria quando a soma da linha e coluna for maior que o grau da matriz
+                secundaria.append(matriz[linhaAux][colunaAux])
+        if(count == linhas):
+            lin = item  # achar a linha da posicao
+        count += 1
+        col.append(item[colunas])  # achar a coluna da posicao
+    vetor = [lin, col, principal, secundaria]
     return vetor
 
-quant = 5
-matriz = No(gerarMatriz(quant),None)
-vetor = [0,4,7,5,2,6,1,3]
-count=0
+
+quant = 8
+matriz = No(gerarMatriz(quant), None)
 borda = []
+bordaMaior = []
 borda.append(matriz)
+isSalve = True
+def expande(valor):
+    vetor = []
+    for item in valor.filho:
+        vetor.insert(0, item)
+    return vetor
+
+
 while(True):
-    if(borda == []):
-        print("")
-        break
-    else:
-        aux =0
-        for item in borda[0].estado:
-            if("G" in item):
-                aux+=1
-        if(aux==quant):
-            break
-        else:
+
+        if(borda == []):
+            borda.append(valor.pai)
+        valor = borda[0]
+        borda.pop(0)
+        for linha in range(quant):
             for coluna in range(quant):
-                for linha in range(quant):
-                    isSalve = True
-                    if(matriz.estado[linha][coluna]=="*"):
-                        aux = teste(matriz.estado,linha,coluna)
-                        for item in aux:
-                            if("G" in item):
-                                isSalve=False
-                                break
-                        if(isSalve):
-                            aux = deepcopy(matriz)
-                            aux.estado[linha][coluna] = "G"
-                            borda[0].filho.append(No(aux,borda[0]))
-                            matriz.estado[linha][coluna] = "G"
+                isSalve = True
+                if(valor.estado[linha][coluna] == "*"):
+                    aux = teste(valor.estado, linha, coluna)
+                    for item in aux:
+                        if("G" in item):
+                            isSalve = False
                             break
-            borda.pop(0)
+                    if(isSalve ):
+                        aux = deepcopy(valor.estado)
+                        aux[linha][coluna] = "G"
+                        borda.append(No(aux,valor))
+                        break
+            if(valor.getProfundidade() == quant):
+                aux = True
+                for item in bordaMaior:
+                    if(item.estado==valor.estado):
+                        aux = False
+                if(aux):
+                    bordaMaior.append(valor)
+                    print("%i combinação encontrada"%bordaMaior.__len__())
+                    break    
+        if(bordaMaior.__len__()==5):
+            break
 
 
-for item in matriz.estado:
-    print(item)
+
+print("")
+for item in bordaMaior:
+    for item2 in item.estado:
+        print(item2)
+    print("")
+while(bordaMaior[4].pai!=None):
+    for item in bordaMaior[4].estado:
+        print(item)
+    print("")
+    bordaMaior[4] = bordaMaior[4].pai
 
 
 # for col in range(quant):
