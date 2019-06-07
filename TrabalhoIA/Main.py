@@ -1,9 +1,10 @@
 from agenteBuscaLocal import AgenteLocal
 from rainhas import Rainha
-from buscaLargura import BuscaLargura
 from oitoPeca import Oitopeca
+from buscaLargura import BuscaLargura
+from buscaProfundidade import BuscaProfundidade
 # quantidade = 8
-# AgenteLocal(quantidade,BuscaLargura,Rainha(8))
+# AgenteLocal(quantidade,BuscaProfundidade,Rainha(8),None,Rainha)
 quantidade = 3
-AgenteLocal(quantidade,BuscaLargura,Oitopeca(quantidade,[[2,3,5],[4,6,7],[8,1,""]]),Oitopeca(quantidade,[[5,6,2],[1,8,4],[7,3,""]]),Oitopeca)
+AgenteLocal(quantidade,BuscaProfundidade,[],Oitopeca(quantidade,[[2,3,5],[4,6,7],[8,1,""]]),Oitopeca(quantidade,[[1,2,3],[4,5,6],[7,8,""]]),Oitopeca)
 

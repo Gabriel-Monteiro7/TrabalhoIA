@@ -64,14 +64,14 @@ class Rainha(No):
         else:
             return False
 
-    def sucessora(self,estadoAtual,borda,tipoBusca):
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema):
         linha = self.quantidadeRainhas(estadoAtual)
         for coluna in range(self.quant):
             if(estadoAtual.estado[coluna][linha] == "*"):
                 if(self.testePosicao(estadoAtual, coluna, linha)):
                     aux = deepcopy(estadoAtual.estado)
                     aux[coluna][linha] = '♕'
-                    borda = tipoBusca.inserir(aux,estadoAtual,borda,self.quant,linha)
+                    borda = tipoBusca.inserir(aux,estadoAtual,borda,self.quant,linha,tipoProblema)
         return borda
             
     def quantidadeRainhas(self,estadoAtual):

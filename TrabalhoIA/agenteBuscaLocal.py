@@ -10,12 +10,13 @@ import time
 # Problema(mapaRomenia.opcao(),origem,destino,2,[])
 
 class AgenteLocal():
-    def __init__(self,quantidade,tipoBusca,estadoInicial,estadoFinal=None,tipoProblema=None):
+    def __init__(self,quantidade,tipoBusca,tipoProfundidade=None,estadoInicial=None,estadoFinal=None,tipoProblema=None):
         self.tipoProblema = tipoProblema
         self.tipoBusca = tipoBusca
-        self.estaInicial = estadoInicial
+        self.estadoInicial = estadoInicial
         self.estadoFinal  = estadoFinal
         self.quantidade = quantidade
+        self.tipoProfundidade = tipoProfundidade
         borda = []
         borda.append(estadoInicial)
         buscaLocal(self,borda)
@@ -25,19 +26,22 @@ def buscaLocal(self,estadoInicial):
     borda = estadoInicial
     linha = 0
     inicio = time.time()
-
+    passos = 0
     while(True):
-        
+        passos+=1
+        print("Quantidade de passos:",passos)
         if(borda==[]):
             break
         else:
             estadoAtual = borda[0]
+            self.tipoProfundidade.append(estadoAtual.estado)
             borda.pop(0)
         if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,combinacoes,borda)):
             fim = time.time()
-            estadoAtual.mostraResultado(combinacoes,tempoTotal = (fim - inicio)*1000)
+            tempoTotal = (fim - inicio)*1000
+            estadoAtual.mostraResultado(combinacoes,tempoTotal,self.estadoInicial)
             break
-        borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema)
+        borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
         
 
 

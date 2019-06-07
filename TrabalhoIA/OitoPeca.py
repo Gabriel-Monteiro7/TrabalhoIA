@@ -1,6 +1,6 @@
 from no import No
 from copy import deepcopy
-
+import random
 class Oitopeca(No):
     def __init__(self,quant,estado = None,pai=None,custo=1):
         if(estado==None):
@@ -13,44 +13,51 @@ class Oitopeca(No):
     def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
         if(estadoAtual.estado == estadoFinal.estado):
             combinacoes.append(estadoAtual)
-            for item in borda:
-                combinacoes.append(item)
             return True
         else:
             return False
 
-    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema):
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
         movimentoColuna = [self.moverEsquerda,[self.moverEsquerda,self.moverDireita],self.moverDireita]
         movimentoLinha = [self.moverCima,[self.moverCima,self.moverBaixo],self.moverBaixo]
         for linha in range(self.quant):
             for coluna in range(self.quant):
                 if(estadoAtual.estado[linha][coluna] == ''):
                     movimento = []
+                    if(type(movimentoLinha[linha]) == list ):
+                        movimento.append(movimentoLinha[linha][1])
+                        movimento.append(movimentoLinha[linha][0])
+                    else:
+                        movimento.append(movimentoLinha[linha])
                     if(type(movimentoColuna[coluna]) == list ):
                         movimento.append(movimentoColuna[coluna][0])
                         movimento.append(movimentoColuna[coluna][1])
                     else:
                         movimento.append(movimentoColuna[coluna])
-                    if(type(movimentoLinha[linha]) == list ):
-                        movimento.append(movimentoLinha[linha][0])
-                        movimento.append(movimentoLinha[linha][1])
-                    else:
-                        movimento.append(movimentoLinha[linha])
+                    random.shuffle(movimento)
                     for item in movimento:
-                        borda = tipoBusca.inserir(item(estadoAtual,linha,coluna),estadoAtual,borda,self.quant,linha,tipoProblema)
+                        borda = tipoBusca.inserir(item(estadoAtual,linha,coluna),estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
                     return borda
         
             
-    def mostraResultado(self,resultado,tempoTotal):
-        print("Quantidade de resultados:",resultado.__len__())
-        print("CustoTotal:",resultado[0].getCusto())
-        while(resultado[0]!=None):
-            print("Profundida:",resultado[0].getProfundidade())
-            for item in resultado[0].estado:
+    def mostraResultado(self,resultado,tempoTotal,estadoInicial):
+        resultado = resultado[0]
+        print("Estado Inicial")
+        for item in estadoInicial.estado:
+            print(item)
+        print("")
+        print("Estado Final")
+        for item in resultado.estado:
+            print(item)
+        print("")
+        while(resultado!=None):
+            print("Profundida:",resultado.getProfundidade())
+            for item in resultado.estado:
                 print(item)
             print("")
-            resultado[0] = resultado[0].pai
+            resultado = resultado.pai
         print("Tempo total: %0.1f" % tempoTotal, "ms")
+        
 
     def moverCima(self,estadoAtual,linha,coluna):
         auxEstado = deepcopy(estadoAtual.estado)
