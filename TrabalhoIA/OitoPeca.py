@@ -42,6 +42,7 @@ class Oitopeca(No):
             
     def mostraResultado(self,resultado,tempoTotal,estadoInicial):
         resultado = resultado[0]
+        print("")
         print("Estado Inicial")
         for item in estadoInicial.estado:
             print(item)
@@ -56,7 +57,7 @@ class Oitopeca(No):
                 print(item)
             print("")
             resultado = resultado.pai
-        print("Tempo total: %0.1f" % tempoTotal, "ms")
+        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos:",int(tempoTotal)/60000)
         
 
     def moverCima(self,estadoAtual,linha,coluna):
