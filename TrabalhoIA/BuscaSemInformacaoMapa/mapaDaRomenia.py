@@ -1,12 +1,12 @@
-from No import No
+from no import No
 from collections import ChainMap
-
+import random
 # -- coding: utf-8 --
 
 
-class MapaDaRomenia:
+class MapaDaRomenia(No):
 
-    def __init__(self):
+    def __init__(self,quant=None,estado = None,pai=None,custo=0):
 
         self.Arad = No("Arad", None)
 
@@ -59,7 +59,7 @@ class MapaDaRomenia:
 
         self.Fagaras = No("Fagaras", None)
 
-        insert(self.Fagaras, No("Bucharest", self.Fagaras, 221))
+        insert(self.Fagaras, No("Bucharest", self.Fagaras, 211))
         insert(self.Fagaras, No("Sibiu", self.Fagaras, 99))
 
         self.Rv = No("Rimnicu Vilcea", None)
@@ -114,8 +114,7 @@ class MapaDaRomenia:
 
         insert(self.Neamt, No("Iasi", self.Neamt, 87))
 
-    def opcao(self):
-        vetorTotal = ChainMap({"Arad": self.Arad}, {"Sibiu": self.Sibiu}, {"Fagaras": self.Fagaras},
+        self.vetorTotal = ChainMap({"Arad": self.Arad}, {"Sibiu": self.Sibiu}, {"Fagaras": self.Fagaras},
                             {"Bucharest": self.Bucharest}, {
             "Rimnicu Vilcea": self.Rv}, {"Pitesti": self.Pitesti},
             {"Zerind": self.Zerind}, {"Oradea": self.Oradea}, {"Timisoara": self.Timisoara}, {"Lugoj": self.Lugoj}, {"Mehadia": self.Mehadia}, {
@@ -123,7 +122,63 @@ class MapaDaRomenia:
             {"Hirsova": self.Hirsova}, {"Eforie": self.Eforie}, {
             "Vaslui": self.Vaslui}, {"Iasi": self.Iasi}, {"Neamt": self.Neamt}
         )
-        return vetorTotal
+        if(estado!=None):
+            if(pai!=None):
+                custoPai=0
+                for item in self.vetorTotal[estado].filho:
+                    if(item.getEstado() == pai.getEstado()):
+                        custoPai = item.getCusto()
+                super().__init__(self.vetorTotal[estado].getEstado(),pai,custo+custoPai)
+            else:
+                super().__init__(self.vetorTotal[estado].getEstado(),pai,custo)
+        else:
+            super().__init__()
+
+
+    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
+        resultado = resultado[0]
+        print("")
+        print("Estado Inicial")
+        print(estadoInicial.getEstado())
+        print("")
+        print("Estado Final")
+        print(resultado.getEstado())
+        print("")
+        print("Caminho é:", end='')
+        estadoAtual = resultado
+        caminho = []
+        while(resultado!=None):
+            caminho.append(resultado)
+            resultado = resultado.pai
+        caminho.reverse()
+        for item in caminho:
+            print(" -->", item.getEstado(), end='')
+        print("")
+        print("Custo Total:",estadoAtual.getCusto())
+        print("Profundidade Total:",estadoAtual.getProfundidade())
+        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
+        
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
+        aux = expande(self.vetorTotal[estadoAtual.getEstado()])
+        random.shuffle(aux)
+        for item in aux:
+            borda = tipoBusca.inserir(item.getEstado(),estadoAtual,borda,None,estadoAtual.getCusto(),tipoProblema,tipoProfundidade)
+        return borda
+
+
+    def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
+        if(estadoAtual.getEstado() == estadoFinal.getEstado()):
+            combinacoes.append(estadoAtual)
+            return True
+        else:
+            return False
 
 def insert(noExistente, no):
         noExistente.filho.append(no)
+
+
+def expande(estadoAtual):
+        vetor = []
+        for item in estadoAtual.filho:
+            vetor.insert(0, item)
+        return vetor

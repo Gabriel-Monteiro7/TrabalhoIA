@@ -1,15 +1,15 @@
 from no import No
 from copy import deepcopy
-
+import random
 
 class Rainha(No):
-    def __init__(self,quant,estado = None,pai=None,custo=1):
+    def __init__(self,quant,estado = None,pai=None,custo=-1):
         if(estado==None):
             self.estado = gerarMatriz(quant)
         else:
             self.estado = estado
         self.quant = quant
-        super().__init__(self.estado,pai,custo)
+        super().__init__(self.estado,pai,custo+1)
 
     def testeDeColisao(self,matriz, linha, coluna):
             col = []
@@ -51,7 +51,7 @@ class Rainha(No):
     def testePosicao(self,estadoAtual, coluna, linha):
         aux = self.testeDeColisao(estadoAtual.estado,coluna,linha)
         for item in aux:
-            if('♕' in item):
+            if('Q' in item):
                 return False
         return True
 
@@ -64,32 +64,49 @@ class Rainha(No):
         else:
             return False
 
-    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema):
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
         linha = self.quantidadeRainhas(estadoAtual)
+        # vetor = []
         for coluna in range(self.quant):
             if(estadoAtual.estado[coluna][linha] == "*"):
                 if(self.testePosicao(estadoAtual, coluna, linha)):
-                    aux = deepcopy(estadoAtual.estado)
-                    aux[coluna][linha] = '♕'
-                    borda = tipoBusca.inserir(aux,estadoAtual,borda,self.quant,linha,tipoProblema)
+                    estadoMatriz = deepcopy(estadoAtual.estado)
+                    estadoMatriz[coluna][linha] = 'Q'
+                    borda = tipoBusca.inserir(estadoMatriz,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
+        #             vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,linha,tipoProblema,tipoProfundidade)
+        # random.shuffle(vetor) 
+        # for item in vetor:
+        #     borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
         return borda
             
     def quantidadeRainhas(self,estadoAtual):
         count=0
         for item in estadoAtual.estado:
-            if('♕' in item):
+            if('Q' in item):
                 count += 1
         return count
-    def mostraResultado(self,resultado,tempoTotal):
-        print("Quantidade de resultados:",resultado.__len__())
-        print("CustoTotal:",resultado[0].getCusto())
-        while(resultado[0]!=None):
-            print("Profundida:",resultado[0].getProfundidade())
-            for item in resultado[0].estado:
+
+    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
+        resultado = resultado[0]
+        print("")
+        print("Estado Inicial")
+        for item in estadoInicial.estado:
+            print(item)
+        print("")
+        print("Estado Final")
+        for item in resultado.estado:
+            print(item)
+        print("")
+        profundidade = resultado.getProfundidade()
+        while(resultado!=None):
+            print("Profundida:",resultado.getProfundidade())
+            print("Custo:",resultado.getCusto())
+            for item in resultado.estado:
                 print(item)
             print("")
-            resultado[0] = resultado[0].pai
-        print("Tempo total: %0.1f" % tempoTotal, "ms")
+            resultado = resultado.pai
+        print("Profundidade Total:",profundidade)
+        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))
 
 def gerarMatriz(quant):
     matriz = []

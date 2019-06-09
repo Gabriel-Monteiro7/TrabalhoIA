@@ -2,13 +2,13 @@ from no import No
 from copy import deepcopy
 import random
 class Oitopeca(No):
-    def __init__(self,quant,estado = None,pai=None,custo=1):
+    def __init__(self,quant,estado = None,pai=None,custo=-1):
         if(estado==None):
             self.estado = gerarMatriz(quant)
         else:
             self.estado = estado
         self.quant = quant
-        super().__init__(self.estado,pai,custo)
+        super().__init__(self.estado,pai,custo+1)
 
     def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
         if(estadoAtual.estado == estadoFinal.estado):
@@ -30,17 +30,17 @@ class Oitopeca(No):
                     else:
                         movimento.append(movimentoLinha[linha])
                     if(type(movimentoColuna[coluna]) == list ):
-                        movimento.append(movimentoColuna[coluna][0])
                         movimento.append(movimentoColuna[coluna][1])
+                        movimento.append(movimentoColuna[coluna][0])
                     else:
                         movimento.append(movimentoColuna[coluna])
                     random.shuffle(movimento)
                     for item in movimento:
-                        borda = tipoBusca.inserir(item(estadoAtual,linha,coluna),estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
+                        borda = tipoBusca.inserir(item(estadoAtual,linha,coluna),estadoAtual,borda,self.quant,estadoAtual.getCusto(),tipoProblema,tipoProfundidade)
                     return borda
         
             
-    def mostraResultado(self,resultado,tempoTotal,estadoInicial):
+    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
         resultado = resultado[0]
         print("")
         print("Estado Inicial")
@@ -51,13 +51,16 @@ class Oitopeca(No):
         for item in resultado.estado:
             print(item)
         print("")
+        profundidade = resultado.getProfundidade()
         while(resultado!=None):
             print("Profundida:",resultado.getProfundidade())
+            print("Custo:",resultado.getCusto())
             for item in resultado.estado:
                 print(item)
             print("")
             resultado = resultado.pai
-        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos:",int(tempoTotal)/60000)
+        print("Profundidade Total:",profundidade)
+        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
         
 
     def moverCima(self,estadoAtual,linha,coluna):

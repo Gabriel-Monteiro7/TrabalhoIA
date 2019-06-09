@@ -30,9 +30,5 @@ class No:
             self.profundidade+=1
             aux = aux.pai
         return self.profundidade
-    def setCusto(self,custo):
-        self.custo = custo
     def getCusto(self):
         return self.custo
-    def incrementarCusto(self):
-        self.custo+=1
