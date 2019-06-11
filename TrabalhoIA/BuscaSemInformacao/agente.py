@@ -37,11 +37,11 @@ class Agente():
 def buscaAgente(self):
     print("Tipo de busca:",self.tipoBusca.value)
     while(self.interacoes):
+        print("Resolvendo o problema...")
         combinacoes = [self.estadoInicial]
         borda=[]
         borda.append(self.estadoInicial)
         inicio = time.time()
-        passos = 0
         while(True):
             if(borda==[]):
                 print("Problema atingiu o limite:",self.limite)
@@ -51,11 +51,6 @@ def buscaAgente(self):
                 if(type(self.tipoProfundidade)==list):
                     self.tipoProfundidade.append(estadoAtual.estado)
                 borda.pop(0)
-            passos+=1
-            print("Quantidade de passos:",passos)
-            for item in estadoAtual.estado:
-                print(item)
-            print("")
             combinacoes = [estadoAtual]
             if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,combinacoes,borda) or self.limite == estadoAtual.getProfundidade()):
                 if(self.tipoBusca.value == "busca por Profundidade interativa" and 
