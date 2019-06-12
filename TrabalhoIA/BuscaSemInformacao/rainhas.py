@@ -58,27 +58,26 @@ class Rainha(No):
     def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
         if(estadoAtual.getProfundidade() == self.quant):
             combinacoes.append(estadoAtual)
-            for item in borda:
-                combinacoes.append(item)
+            # for item in borda:
+            #     combinacoes.append(item)
             return True
         else:
             return False
 
     def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
         linha = self.quantidadeRainhas(estadoAtual)
-        # vetor = []
+        vetor = []
         for coluna in range(self.quant):
             if(estadoAtual.estado[coluna][linha] == "*"):
                 if(self.testePosicao(estadoAtual, coluna, linha)):
                     estadoMatriz = deepcopy(estadoAtual.estado)
                     estadoMatriz[coluna][linha] = 'Q'
-                    borda = tipoBusca.inserir(estadoMatriz,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
-        #             vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,linha,tipoProblema,tipoProfundidade)
-        # random.shuffle(vetor) 
-        # for item in vetor:
-        #     borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
-        return borda
-            
+                    # borda = tipoBusca.inserir(estadoMatriz,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
+                    vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,linha,tipoProblema,tipoProfundidade)
+        random.shuffle(vetor) 
+        for item in vetor:
+            borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
+        return borda    
     def quantidadeRainhas(self,estadoAtual):
         count=0
         for item in estadoAtual.estado:

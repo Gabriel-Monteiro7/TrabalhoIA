@@ -1,5 +1,6 @@
 from copy import deepcopy
 import time
+from TipoBusca.buscaProfundidade import BuscaProfundidade
 # 1 == Largura #2 == Profundidade #3 == Custo Uniforme
 # ultimo parametro é o tipo de busca se for por profundidade
 # [] = se for lista de visitados
@@ -28,29 +29,39 @@ class Agente():
             self.tipoProfundidade = None
 
         self.tipoProblema = tipoProblema
-        self.estadoInicial = estadoInicial
         self.estadoFinal  = estadoFinal
         self.quantidade = quantidade
-
+        if(estadoInicial==None):
+            estadoInicial = [deepcopy(self.estadoFinal)]
+            for index in range(20):
+                estadoInicial  = estadoInicial[0].sucessora(estadoInicial[0],[],BuscaProfundidade(),self.tipoProblema,None)
+            self.estadoInicial = estadoInicial[0]
+        else:
+            self.estadoInicial = estadoInicial
         buscaAgente(self)
 
 def buscaAgente(self):
     print("Tipo de busca:",self.tipoBusca.value)
+    print("Resolvendo o problema...")
+    inicio = time.time()
     while(self.interacoes):
-        print("Resolvendo o problema...")
         combinacoes = [self.estadoInicial]
         borda=[]
         borda.append(self.estadoInicial)
-        inicio = time.time()
         while(True):
             if(borda==[]):
-                print("Problema atingiu o limite:",self.limite)
+                if(self.tipoBusca.value == "busca por Profundidade limitada"):
+                    print("Problema atingiu o limite:",self.limite)
                 break
             else:
                 estadoAtual = borda[0]
                 if(type(self.tipoProfundidade)==list):
                     self.tipoProfundidade.append(estadoAtual.estado)
                 borda.pop(0)
+            if(self.tipoBusca.value == "busca por Profundidade limitada"):
+                for item in estadoAtual.estado:
+                    print(item)
+                print("")
             combinacoes = [estadoAtual]
             if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,combinacoes,borda) or self.limite == estadoAtual.getProfundidade()):
                 if(self.tipoBusca.value == "busca por Profundidade interativa" and 

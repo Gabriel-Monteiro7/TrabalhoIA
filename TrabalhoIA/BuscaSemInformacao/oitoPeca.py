@@ -1,6 +1,8 @@
 from no import No
 from copy import deepcopy
 import random
+
+
 class Oitopeca(No):
     def __init__(self,quant,estado = None,pai=None,custo=-1):
         if(estado==None):
@@ -57,15 +59,16 @@ class Oitopeca(No):
         for item in resultado.getEstado():
             print(item)
         print("")
-        # while(resultado!=None):
-        #     print("Profundida:",resultado.getProfundidade())
-        #     print("Custo:",resultado.getCusto())
-        #     for item in resultado.getEstado():
-        #         print(item)
-        #     print("")
-        #     resultado = resultado.pai
-        print("Profundidade Total:",resultado.getProfundidade())
-        print("Custo:",resultado.getCusto())
+        resultadoAux = resultado
+        while(resultado!=None):
+            print("Profundida:",resultado.getProfundidade())
+            print("Custo:",resultado.getCusto())
+            for item in resultado.getEstado():
+                print(item)
+            print("")
+            resultado = resultado.pai
+        print("Profundidade Total:",resultadoAux.getProfundidade())
+        print("Custo:",resultadoAux.getCusto())
         print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
         
 
