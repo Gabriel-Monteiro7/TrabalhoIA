@@ -21,7 +21,7 @@ from TipoBusca.buscaCustoUniforme import BuscaCustoUniforme
 #Se a busca for diferente de Profundidade esse parametro é descatado
 
 quantidade = 8
-Agente(quantidade,BuscaProfundidade,5,Rainha(quantidade),None,Rainha)
+Agente(quantidade,TipoBusca.buscaLargura,None,Rainha(quantidade),None,Rainha)
 
 # quantidade = 3
 # Agente(quantidade,BuscaProfundidade,None,None,Oitopeca(quantidade,[[1,4,2],[3,"",5],[6,7,8]]),Oitopeca)
