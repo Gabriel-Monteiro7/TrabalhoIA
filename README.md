@@ -5,7 +5,7 @@ O trabalho a seguir descreve um agente para a resolução do problema das N-Rain
 	 - Profundidade
 	 - Profundidade com lista visitados 
 	 - Profundidade limitada 
-	 - Profundamento iterativo; 
+	 - Profundamento iterativo 
 	 - Largura
 	 - Custo uniforme
 
