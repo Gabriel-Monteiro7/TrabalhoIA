@@ -6,7 +6,7 @@ from TipoBusca.buscaLargura import BuscaLargura
 # ultimo parametro é o tipo de busca se for por profundidade
 # [] = se for lista de visitados
 # int se for limitado
-# Object se for interativa
+# Object se for iterativa
 # Problema(mapaRomenia.opcao(),origem,destino,2,[])
 
 class Agente():
@@ -24,7 +24,7 @@ class Agente():
                 self.tipoBusca.value = self.tipoBusca.value+" limitada"
                 self.limite=tipoProfundidade-1
             elif(type(self.tipoProfundidade)  == dict):
-                self.tipoBusca.value = self.tipoBusca.value+" interativa"
+                self.tipoBusca.value = self.tipoBusca.value+" iterativa"
                 self.limite=0
         else:
             self.tipoProfundidade = None
@@ -75,27 +75,32 @@ def buscaAgente(self):
             #TesteObjetivo que verifica o estado ou se ele atingiu o limite
             if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda) or self.limite == estadoAtual.getProfundidade()):
                 #Como interativa vai executar diversas vezes vou incrementando o limite ate achar o valor
-                if(self.tipoBusca.value == "busca por Profundidade interativa" and 
+                if(self.tipoBusca.value == "busca por Profundidade iterativa" and 
                 not estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
                     self.limite = 1+estadoAtual.getProfundidade()
                 #senão ele achou o valor
                 else:
                     self.interacoes = False
                 #Aqui ele ja vai chamar o resultado, se limitado for o limite que tiver a reposta ele entra tambem
-                if(self.tipoBusca.value != "busca por Profundidade limitada" or 
-                (self.tipoBusca.value == "busca por Profundidade limitada" and self.quantidade == estadoAtual.getProfundidade())):
-                    fim = time.time()
-                    tempoTotal = (fim - inicio)*1000
-                    estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
-                    print("")
-                    break
+                fim = time.time()
+                tempoTotal = (fim - inicio)*1000
+                estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
+                print("")
+                break
+                
+                #
+                # if(self.tipoBusca.value != "busca por Profundidade limitada" or 
+                # (self.tipoBusca.value == "busca por Profundidade limitada" and self.quantidade == estadoAtual.getProfundidade())):
+                    
                 #Aqui se for limitado ele vai expandir ate achar todos os nós no limite
-                else:
-                    while(borda!=[]):
-                        if(borda[0].getProfundidade()>self.limite):
-                            borda.pop(0)
-                        else:
-                            break 
+                # else:
+                #     while(borda!=[]):
+                #         if(borda[0].getProfundidade()>self.limite):
+                #             borda.pop(0)
+                #         else:
+                #             break 
+
+
             #senão achou o valor ele vai expandir a borda        
             else:
                 borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
