@@ -1,6 +1,6 @@
 ## Trabalho de Inteligência artificial
 
-O trabalho a seguir descreve um agente para a resolução do problemas das N-Rainhas, quebra-cabeça de 8 peças(...) e Mapa da Romênia que utilizam as buscas por :
+O trabalho a seguir descreve um agente para a resolução do problema das N-Rainhas, quebra-cabeça de 8 peças(...) e Mapa da Romênia que utilizam as buscas por :
 	
 	 - Profundidade
 	 - Profundidade com lista visitados; 
