@@ -12,14 +12,14 @@ class Oitopeca(No):
         self.quant = quant
         super().__init__(self.estado,pai,custo+1)
 
-    def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
+    def testeDeObjetividade(self,estadoAtual,estadoFinal,borda):
         if(estadoAtual.getEstado() == estadoFinal.getEstado()):
-            combinacoes.append(estadoAtual)
             return True
         else:
             return False
 
     def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
+        #Aqui eu seto os movimentos em dois vetores, que depedendo da linha e coluna ele fara os movimento
         movimentoColuna = [self.moverEsquerda,[self.moverEsquerda,self.moverDireita],self.moverDireita]
         movimentoLinha = [self.moverCima,[self.moverCima,self.moverBaixo],self.moverBaixo]
         linhaAux=0
@@ -43,22 +43,14 @@ class Oitopeca(No):
                     break 
             if(movimento.__len__()!=0):
                 break 
+        #Aqui os movimentos encontrados sao embaralhados
         random.shuffle(movimento)
+        #Aqui se cria os filhos que sao add na borda e o tipo da busca que vai definir a posicao de insercao
         for item in movimento:
             borda = tipoBusca.inserir(item(estadoAtual,linhaAux,colunaAux),estadoAtual,borda,self.quant,estadoAtual.getCusto(),tipoProblema,tipoProfundidade)
         return borda
         
     def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
-        resultado = resultado[0]
-        print("")
-        print("Estado Inicial")
-        for item in estadoInicial.getEstado():
-            print(item)
-        print("")
-        print("Estado Final")
-        for item in resultado.getEstado():
-            print(item)
-        print("")
         resultadoAux = resultado
         while(resultado!=None):
             print("Profundida:",resultado.getProfundidade())
@@ -67,9 +59,18 @@ class Oitopeca(No):
                 print(item)
             print("")
             resultado = resultado.pai
+        print("")
+        print("Estado Inicial")
+        for item in estadoInicial.getEstado():
+            print(item)
+        print("")
+        print("Estado Final")
+        for item in resultadoAux.getEstado():
+            print(item)
+        print("")
         print("Profundidade Total:",resultadoAux.getProfundidade())
         print("Custo:",resultadoAux.getCusto())
-        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
+        print("Tempo total: %.4f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))
         
 
     def moverCima(self,estadoAtual,linha,coluna):

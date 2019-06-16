@@ -13,19 +13,19 @@ from TipoBusca.buscaProfundidade import BuscaProfundidade
 from TipoBusca.buscaCustoUniforme import BuscaCustoUniforme
 
 
-
+#Agente(tamanhoDaMatriz,TipoBusca,TipoDaProfundidade ,EstadoInicial,EstadoFinal,TipoProblema)
 
 #BuscaCustoUniforme
 #BuscaLargura
 #BuscaProfundidade tem 3 parametro : []  = lista de visitados. int = limitada. {} = interativo
 #Se a busca for diferente de Profundidade esse parametro é descatado
 
-# quantidade = 20
-# Agente(quantidade,BuscaLargura,None,Rainha(quantidade),None,Rainha)
+quantidade = 8
+Agente(quantidade,BuscaLargura,None,Rainha(quantidade),None,Rainha)
 
 # quantidade = 3
-# Agente(quantidade,BuscaLargura,[] ,None,Oitopeca(quantidade,[[1,2,3],[4,5,6],[7,8,""]]),Oitopeca)
+# Agente(quantidade,BuscaProfundidade,None,None,Oitopeca(quantidade,[[1,2,3],[4,5,6],[7,8,""]]),Oitopeca)
 
 # mapaRomenia = MapaDaRomenia()
-# AgenteMapa(BuscaLargura,[],MapaDaRomenia(None,mapaRomenia.Arad.estado),MapaDaRomenia(None,mapaRomenia.Bucharest.estado),MapaDaRomenia)
+# AgenteMapa(BuscaProfundidade,None,MapaDaRomenia(None,mapaRomenia.Arad.estado),MapaDaRomenia(None,mapaRomenia.Bucharest.estado),MapaDaRomenia)
 

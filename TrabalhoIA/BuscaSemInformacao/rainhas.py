@@ -49,15 +49,16 @@ class Rainha(No):
             return vetor
 
     def testePosicao(self,estadoAtual, coluna, linha):
+        #Aqui ele testa se não existe colisão
         aux = self.testeDeColisao(estadoAtual.estado,coluna,linha)
         for item in aux:
             if('Q' in item):
                 return False
         return True
 
-    def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
+    def testeDeObjetividade(self,estadoAtual,estadoFinal,borda):
         if(estadoAtual.getProfundidade() == self.quant):
-            combinacoes.append(estadoAtual)
+            # combinacoes.append(estadoAtual)
             # for item in borda:
             #     combinacoes.append(item)
             return True
@@ -65,20 +66,23 @@ class Rainha(No):
             return False
 
     def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
-        linha = self.quantidadeRainhas(estadoAtual)
+        #Aqui ele ve quantas rainhas ja existe e 
+        coluna = self.quantidadeRainhas(estadoAtual)
         vetor = []
-        for coluna in range(self.quant):
-            if(estadoAtual.estado[coluna][linha] == "*"):
-                if(self.testePosicao(estadoAtual, coluna, linha)):
+        for linha in range(self.quant):
+            if(estadoAtual.estado[linha][coluna] == "*"):
+                if(self.testePosicao(estadoAtual, linha, coluna)):
                     estadoMatriz = deepcopy(estadoAtual.estado)
-                    estadoMatriz[coluna][linha] = 'Q'
+                    estadoMatriz[linha][coluna] = 'Q'
                     # borda = tipoBusca.inserir(estadoMatriz,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
-                    vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,linha,tipoProblema,tipoProfundidade)
+                    vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,coluna,tipoProblema,tipoProfundidade)
+        # if(tipoBusca.value != "busca por Profundidade limitada"):
         random.shuffle(vetor) 
         for item in vetor:
-            borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
+            borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,coluna,tipoProblema,tipoProfundidade)
         return borda    
     def quantidadeRainhas(self,estadoAtual):
+        #Verifica a quantidade de rainhas no tabuleiro
         count=0
         for item in estadoAtual.estado:
             if('Q' in item):
@@ -86,7 +90,6 @@ class Rainha(No):
         return count
 
     def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
-        resultado = resultado[0]
         print("")
         print("Estado Inicial")
         for item in estadoInicial.estado:
@@ -105,7 +108,7 @@ class Rainha(No):
             print("")
             resultado = resultado.pai
         print("Profundidade Total:",profundidade)
-        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))
+        print("Tempo total: %.4f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))
 
 def gerarMatriz(quant):
     matriz = []
