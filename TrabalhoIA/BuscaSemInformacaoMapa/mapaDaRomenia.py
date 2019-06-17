@@ -1,4 +1,4 @@
-from no import No
+from No import No
 from collections import ChainMap
 import random
 # -- coding: utf-8 --
@@ -135,8 +135,7 @@ class MapaDaRomenia(No):
             super().__init__()
 
 
-    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
-        resultado = resultado[0]
+    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca,passos):
         print("")
         print("Estado Inicial")
         print(estadoInicial.getEstado())
@@ -155,6 +154,7 @@ class MapaDaRomenia(No):
             print(" -->", item.getEstado(), end='')
         print("")
         print("Custo Total:",estadoAtual.getCusto())
+        print("Passos Total:",passos)
         print("Profundidade Total:",estadoAtual.getProfundidade())
         print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
         
@@ -166,9 +166,8 @@ class MapaDaRomenia(No):
         return borda
 
 
-    def testeDeObjetividade(self,estadoAtual,estadoFinal, combinacoes,borda):
+    def testeDeObjetividade(self,estadoAtual,estadoFinal,borda):
         if(estadoAtual.getEstado() == estadoFinal.getEstado()):
-            combinacoes.append(estadoAtual)
             return True
         else:
             return False
