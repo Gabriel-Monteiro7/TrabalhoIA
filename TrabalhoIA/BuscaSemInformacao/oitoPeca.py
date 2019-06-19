@@ -27,7 +27,7 @@ class Oitopeca(No):
         movimento = []
         for linha in range(self.quant):
             for coluna in range(self.quant):
-                if(estadoAtual.estado[linha][coluna] == ''):
+                if(estadoAtual.estado[linha][coluna] == 0):
                     linhaAux = linha
                     colunaAux = coluna
                     if(type(movimentoLinha[linha]) == list ):
@@ -76,25 +76,25 @@ class Oitopeca(No):
     def moverCima(self,estadoAtual,linha,coluna):
         auxEstado = deepcopy(estadoAtual.getEstado())
         auxEstado[linha][coluna] = auxEstado[linha+1][coluna]
-        auxEstado[linha+1][coluna] = ''
+        auxEstado[linha+1][coluna] = 0
         return auxEstado
 
     def moverBaixo(self,estadoAtual,linha,coluna):
         auxEstado = deepcopy(estadoAtual.estado)
         auxEstado[linha][coluna] = auxEstado[linha-1][coluna]
-        auxEstado[linha-1][coluna] = ''
+        auxEstado[linha-1][coluna] = 0
         return auxEstado
 
     def moverEsquerda(self,estadoAtual,linha,coluna):
         auxEstado = deepcopy(estadoAtual.estado)
         auxEstado[linha][coluna] = auxEstado[linha][coluna+1]
-        auxEstado[linha][coluna+1] = ''
+        auxEstado[linha][coluna+1] = 0
         return auxEstado
 
     def moverDireita(self,estadoAtual,linha,coluna):
         auxEstado = deepcopy(estadoAtual.estado)
         auxEstado[linha][coluna] = auxEstado[linha][coluna-1]
-        auxEstado[linha][coluna-1] = ''
+        auxEstado[linha][coluna-1] = 0
         return auxEstado   
 
 def gerarMatriz(quant):
@@ -102,7 +102,7 @@ def gerarMatriz(quant):
     for c in range(quant):
         linha = []
         for l in range(quant):
-            linha.append("*")
+            linha.append("s")
         matriz.append(linha)
     return matriz
     

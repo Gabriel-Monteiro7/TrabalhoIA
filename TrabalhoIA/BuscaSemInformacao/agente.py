@@ -1,13 +1,11 @@
 from copy import deepcopy
 import time
-from TipoBusca.buscaProfundidade import BuscaProfundidade
-from TipoBusca.buscaLargura import BuscaLargura
 
 class Agente():
     def __init__(self,quantidade,tipoBusca,tipoProfundidade=None,estadoInicial=None,estadoFinal=None,tipoProblema=None):
         
         self.tipoBusca = tipoBusca()
-        self.interacoes=True
+        self.iteracoes=True
         self.limite = None
         self.tipoProfundidade = tipoProfundidade
         #Aqui identifica qual tipo de profundidade
@@ -26,14 +24,8 @@ class Agente():
         self.tipoProblema = tipoProblema
         self.estadoFinal  = estadoFinal
         self.quantidade = quantidade
-        #Aqui pega o estado final e embaralha 20 vezes e faz o resultado ser o estado inicial
-        if(estadoInicial==None):
-            estadoInicial = [deepcopy(self.estadoFinal)]
-            for index in range(20):
-                estadoInicial  = estadoInicial[0].sucessora(estadoInicial[0],[],BuscaProfundidade(),self.tipoProblema,None)
-            self.estadoInicial = tipoProblema(self.quantidade,estadoInicial[0].getEstado(),None)
-        else:
-            self.estadoInicial = estadoInicial
+        
+        self.estadoInicial = estadoInicial
         #Inicia o problema
         buscaAgente(self)
 
@@ -42,15 +34,24 @@ def buscaAgente(self):
     print("Resolvendo o problema...")
     inicio = time.time()
     #Aqui vai executar quantas vezes for necessario
-    while(self.interacoes):
+    while(self.iteracoes):
         # combinacoes = [self.estadoInicial]
         #Inicio a borda
         borda=[]
         borda.append(self.estadoInicial)
+        estadoAtual = borda[0]
+        aux = estadoAtual
+        passos =0
         while(True):
-            #Aqui ele roda ate achar o resultado, se a borda ficar vazia ele sai
-            if(borda==[]):
-                break
+            #Aqui ele roda ate achar o resultado, se a borda ficar vazia ou atingir uma quantidade de passos
+            #Se for vazia ele volta um nivel(profundidade), é mais aplicado ao profundidade iterativo
+            if(borda ==[] or passos==500000):
+                if(borda != []):
+                    print("Limite na quantidade de passos:",passos,self.limite,estadoAtual.getProfundidade())
+                    self.iteracoes = False
+                    break
+                else:
+                    borda = [aux]
             else:
                 #Senão ele faz o passo a passo do algoritmo, pegar o primeiro da borda
                 #se for profundidade com visitados ele add na lista de visitados
@@ -58,22 +59,19 @@ def buscaAgente(self):
                 if(type(self.tipoProfundidade)==list):
                     self.tipoProfundidade.append(estadoAtual.estado)
                 borda.pop(0)
-            if(self.tipoBusca.value == "busca por Profundidade limitada"):
-                for item in estadoAtual.estado:
-                    print(item)
-                print("")
+            passos+=1
             #Aqui é só pra mostrar os estados se for limitado   
             # combinacoes = [estadoAtual]
             #TesteObjetivo que verifica o estado ou se ele atingiu o limite.
             #Se o limite for na limitada ele ja para, se for na iterativa ele garante se ja chegou no
             #valor desejado
             if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda) 
-            or (self.limite == estadoAtual.getProfundidade() and borda ==[]) 
-            or (self.limite == estadoAtual.getProfundidade() and (type(self.tipoProfundidade)==int) )):
+            or (self.limite == estadoAtual.getProfundidade() and borda ==[])):
                 #Como interativa vai executar diversas vezes vou incrementando o limite ate achar o valor
                 if(self.tipoBusca.value == "busca por Profundidade iterativa" and 
                 not estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
                     print("Problema atingiu o limite:",self.limite)
+                    aux = estadoAtual
                     self.limite = 1+estadoAtual.getProfundidade()
                     break
                 #senão ele achou o valor
@@ -81,14 +79,13 @@ def buscaAgente(self):
                     if((type(self.tipoProfundidade)==int) and not
                     estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
                         print("Problema atingiu o limite:",self.limite)
-                    else:
-                        fim = time.time()
-                        tempoTotal = (fim - inicio)*1000
-                        estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
-                        print("")
-                    self.interacoes = False
+                    fim = time.time()
+                    tempoTotal = (fim - inicio)*1000
+                    estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
+                    print("")
+                    self.iteracoes = False
                     break
-            #senão achou o valor ele vai expandir a borda
+            #senão achou o valor ele vai expandir a borda, enquanto for diferente do limite
             elif(self.limite!=estadoAtual.getProfundidade()):        
                 borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
         

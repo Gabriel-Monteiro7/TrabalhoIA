@@ -74,12 +74,10 @@ class Rainha(No):
                 if(self.testePosicao(estadoAtual, linha, coluna)):
                     estadoMatriz = deepcopy(estadoAtual.estado)
                     estadoMatriz[linha][coluna] = 'Q'
-                    # borda = tipoBusca.inserir(estadoMatriz,estadoAtual,borda,self.quant,linha,tipoProblema,tipoProfundidade)
-                    vetor = tipoBusca.inserir(estadoMatriz,estadoAtual,vetor,self.quant,coluna,tipoProblema,tipoProfundidade)
-        # if(tipoBusca.value != "busca por Profundidade limitada"):
+                    vetor.append(estadoMatriz)
         random.shuffle(vetor) 
         for item in vetor:
-            borda = tipoBusca.inserir(item.estado,estadoAtual,borda,self.quant,coluna,tipoProblema,tipoProfundidade)
+            borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,coluna,tipoProblema,tipoProfundidade)
         return borda    
     def quantidadeRainhas(self,estadoAtual):
         #Verifica a quantidade de rainhas no tabuleiro
