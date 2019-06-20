@@ -87,27 +87,6 @@ class Rainha(No):
                 count += 1
         return count
 
-    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca):
-        print("")
-        print("Estado Inicial")
-        for item in estadoInicial.estado:
-            print(item)
-        print("")
-        print("Estado Final")
-        for item in resultado.estado:
-            print(item)
-        print("")
-        profundidade = resultado.getProfundidade()
-        while(resultado!=None):
-            print("Profundida:",resultado.getProfundidade())
-            print("Custo:",resultado.getCusto())
-            for item in resultado.estado:
-                print(item)
-            print("")
-            resultado = resultado.pai
-        print("Profundidade Total:",profundidade)
-        print("Tempo total: %.4f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))
-
 def gerarMatriz(quant):
     matriz = []
     for c in range(quant):
@@ -116,5 +95,3 @@ def gerarMatriz(quant):
             linha.append("*")
         matriz.append(linha)
     return matriz
-    
-    

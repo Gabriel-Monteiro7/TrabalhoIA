@@ -84,17 +84,32 @@ def buscaAgente(self):
                         print("Valor encontrado")
                     fim = time.time()
                     tempoTotal = (fim - inicio)*1000
-                    estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
+                    mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
                     print("")
                     self.iteracoes = False
                     break
             #senão achou o valor ele vai expandir o estado atual e add na borda de acordo com sua busca
             else:
                 borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
-        
-        
 
-
-
-
-
+def mostraResultado(resultado,tempoTotal,estadoInicial,tipoBusca):
+        resultadoAux = resultado
+        while(resultado!=None):
+            print("Profundida:",resultado.getProfundidade())
+            print("Custo:",resultado.getCusto())
+            for item in resultado.getEstado():
+                print(item)
+            print("")
+            resultado = resultado.pai
+        print("")
+        print("Estado Inicial")
+        for item in estadoInicial.getEstado():
+            print(item)
+        print("")
+        print("Estado Final")
+        for item in resultadoAux.getEstado():
+            print(item)
+        print("")
+        print("Profundidade Total:",resultadoAux.getProfundidade())
+        print("Custo:",resultadoAux.getCusto())
+        print("Tempo total: %.4f" % tempoTotal, "ms. Em minutos: %0.4f mins"%(tempoTotal/60000))     
