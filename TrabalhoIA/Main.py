@@ -27,5 +27,5 @@ from TipoBusca.buscaCustoUniforme import BuscaCustoUniforme
 # Agente(quantidade,BuscaCustoUniforme,12,Oitopeca(quantidade,[[0,2,3],[1,5,6],[7,8,4]]),Oitopeca(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),Oitopeca)
 
 mapaRomenia = MapaDaRomenia()
-AgenteMapa(BuscaCustoUniforme,[],MapaDaRomenia(None,mapaRomenia.Arad.estado),MapaDaRomenia(None,mapaRomenia.Bucharest.estado),MapaDaRomenia)
+AgenteMapa(BuscaProfundidade,{},MapaDaRomenia(None,mapaRomenia.Arad.estado),MapaDaRomenia(None,mapaRomenia.Bucharest.estado),MapaDaRomenia)
 

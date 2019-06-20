@@ -3,10 +3,8 @@ class BuscaProfundidade:
         self.value ="busca por Profundidade"
     def inserir(self,estado,estadoAtual,borda,quant,custo,tipoProblema=None,tipoProfundidade=None):
         #List ade visitados
-        if(type(tipoProfundidade) == list):
-            if(not (estado in tipoProfundidade)):
-                borda.insert(0,tipoProblema(quant,estado, estadoAtual,custo))
-                return borda
+        if(type(tipoProfundidade) == list and (estado in tipoProfundidade)):
+            return borda
         #Se tiver atingindo o limite(limitada ou iterativa)
         elif(type(tipoProfundidade) == int and tipoProfundidade==estadoAtual.getProfundidade()):
             return borda
