@@ -6,7 +6,6 @@ class Agente():
         
         self.tipoBusca = tipoBusca()
         self.iteracoes=True
-        self.limite = None
         self.tipoProfundidade = tipoProfundidade
         #Aqui identifica qual tipo de profundidade
         if(self.tipoBusca.value == "busca por Profundidade"):
@@ -14,13 +13,13 @@ class Agente():
                 self.tipoBusca.value = self.tipoBusca.value+" com lista de visitados"
             elif(type(self.tipoProfundidade)==int):
                 self.tipoBusca.value = self.tipoBusca.value+" limitada"
-                self.limite=tipoProfundidade-1
+                self.tipoProfundidade-=1
             elif(type(self.tipoProfundidade)  == dict):
                 self.tipoBusca.value = self.tipoBusca.value+" iterativa"
-                self.limite=0
+                self.tipoProfundidade=0
+            #Se for iteratica ou limitada ele seta no tipo problema o limite que sera checado na busca em si
         else:
             self.tipoProfundidade = None
-
         self.tipoProblema = tipoProblema
         self.estadoFinal  = estadoFinal
         self.quantidade = quantidade
@@ -39,15 +38,15 @@ def buscaAgente(self):
         #Inicio a borda
         borda=[]
         borda.append(self.estadoInicial)
-        estadoAtual = borda[0]
-        aux = estadoAtual
+        aux = borda[0]
         passos =0
         while(True):
             #Aqui ele roda ate achar o resultado, se a borda ficar vazia ou atingir uma quantidade de passos
             #Se for vazia ele volta um nivel(profundidade), é mais aplicado ao profundidade iterativo
             if(borda ==[] or passos==500000):
                 if(borda != []):
-                    print("Limite na quantidade de passos:",passos,self.limite,estadoAtual.getProfundidade())
+                    print("Valor não encontrado")
+                    print("Limite na quantidade de passos:",passos)
                     self.iteracoes = False
                     break
                 else:
@@ -63,30 +62,34 @@ def buscaAgente(self):
             #Aqui é só pra mostrar os estados se for limitado   
             # combinacoes = [estadoAtual]
             #TesteObjetivo que verifica o estado ou se ele atingiu o limite.
-            #Se o limite for na limitada ele ja para, se for na iterativa ele garante se ja chegou no
-            #valor desejado
+            #Se ele for o iterativo ele incrementa o limite(tipoProblema), senao ele verifica
+            #se ele atingiu o limite por ser a profundidade limitada, se for ele para, senao ele
+            #quer dizer que o valor foi encontrado, ele printa o caminho e diz que achou o caminho.
             if(estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda) 
-            or (self.limite == estadoAtual.getProfundidade() and borda ==[])):
+            or (self.tipoProfundidade == estadoAtual.getProfundidade() and borda ==[])):
                 #Como interativa vai executar diversas vezes vou incrementando o limite ate achar o valor
                 if(self.tipoBusca.value == "busca por Profundidade iterativa" and 
                 not estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
-                    print("Problema atingiu o limite:",self.limite)
+                    print("Problema atingiu o limite:",self.tipoProfundidade)
                     aux = estadoAtual
-                    self.limite = 1+estadoAtual.getProfundidade()
+                    self.tipoProfundidade = 1+estadoAtual.getProfundidade()
                     break
                 #senão ele achou o valor
                 else:
-                    if((type(self.tipoProfundidade)==int) and not
+                    if(self.tipoBusca.value == "busca por Profundidade limitada" and not
                     estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
-                        print("Problema atingiu o limite:",self.limite)
+                        print("Valor não encontrado")
+                        print("Problema atingiu o limite:",self.tipoProfundidade)
+                    else:
+                        print("Valor encontrado")
                     fim = time.time()
                     tempoTotal = (fim - inicio)*1000
                     estadoAtual.mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,self.tipoBusca) 
                     print("")
                     self.iteracoes = False
                     break
-            #senão achou o valor ele vai expandir a borda, enquanto for diferente do limite
-            elif(self.limite!=estadoAtual.getProfundidade()):        
+            #senão achou o valor ele vai expandir o estado atual e add na borda de acordo com sua busca
+            else:
                 borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
         
         
