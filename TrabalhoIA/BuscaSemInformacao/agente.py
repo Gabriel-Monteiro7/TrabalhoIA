@@ -90,7 +90,7 @@ def buscaAgente(self):
                     break
             #senão achou o valor ele vai expandir o estado atual e add na borda de acordo com sua busca
             else:
-                borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade)
+                borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.tipoProfundidade,self.estadoFinal)
 
 def mostraResultado(resultado,tempoTotal,estadoInicial,tipoBusca):
         resultadoAux = resultado
