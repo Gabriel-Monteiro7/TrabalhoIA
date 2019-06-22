@@ -134,35 +134,12 @@ class MapaDaRomenia(No):
         else:
             super().__init__()
 
-
-    def mostraResultado(self,resultado,tempoTotal,estadoInicial,tipoBusca,passos):
-        print("")
-        print("Estado Inicial")
-        print(estadoInicial.getEstado())
-        print("")
-        print("Estado Final")
-        print(resultado.getEstado())
-        print("")
-        print("Caminho é:", end='')
-        estadoAtual = resultado
-        caminho = []
-        while(resultado!=None):
-            caminho.append(resultado)
-            resultado = resultado.pai
-        caminho.reverse()
-        for item in caminho:
-            print(" -->", item.getEstado(), end='')
-        print("")
-        print("Custo Total:",estadoAtual.getCusto())
-        print("Passos Total:",passos)
-        print("Profundidade Total:",estadoAtual.getProfundidade())
-        print("Tempo total: %.1f" % tempoTotal, "ms. Em minutos: %0.1f mins"%(tempoTotal/60000))
         
-    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,estadoFinal,listaVisitados,limite):
         aux = expande(self.vetorTotal[estadoAtual.getEstado()])
         random.shuffle(aux)
         for item in aux:
-            borda = tipoBusca.inserir(item.getEstado(),estadoAtual,borda,None,estadoAtual.getCusto(),tipoProblema,tipoProfundidade)
+            borda = tipoBusca.inserir(item.getEstado(),estadoAtual,borda,None,estadoAtual.getCusto(),tipoProblema,listaVisitados,limite)
         return borda
 
 
