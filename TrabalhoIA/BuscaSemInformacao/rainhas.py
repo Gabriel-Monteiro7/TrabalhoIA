@@ -65,7 +65,7 @@ class Rainha(No):
         else:
             return False
 
-    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,tipoProfundidade):
+    def sucessora(self,estadoAtual,borda,tipoBusca,tipoProblema,estadoFinal,listaVisitados,limite):
         #Aqui ele ve quantas rainhas ja existe e 
         coluna = self.quantidadeRainhas(estadoAtual)
         vetor = []
@@ -77,7 +77,7 @@ class Rainha(No):
                     vetor.append(estadoMatriz)
         random.shuffle(vetor) 
         for item in vetor:
-            borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,coluna,tipoProblema,tipoProfundidade)
+            borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,coluna,tipoProblema,listaVisitados,limite)
         return borda    
     def quantidadeRainhas(self,estadoAtual):
         #Verifica a quantidade de rainhas no tabuleiro

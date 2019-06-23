@@ -46,20 +46,17 @@ def buscaAgente(self):
         while(True):
             #Aqui ele roda ate achar o resultado, se a borda ficar vazia ou atingir uma quantidade de passos
             #Se for vazia ele volta um nivel(profundidade), é mais aplicado ao profundidade iterativo
-            if(borda ==[] or passos==500000):
-                if(borda != []):
-                    print("Valor não encontrado")
-                    print("Limite na quantidade de passos:",passos)
-                    self.iteracoes = False
-                    break
-                else:
-                    borda = [aux]
+            if(borda ==[] or passos==1000000):
+                print("Valor não encontrado")
+                print("Limite na quantidade de passos:",passos)
+                self.iteracoes = False
+                break
             else:
                 #Senão ele faz o passo a passo do algoritmo, pegar o primeiro da borda
                 #se for profundidade com visitados ele add na lista de visitados
                 estadoAtual = borda[0]
                 if(self.listaVisitados != None):
-                    self.listaVisitados.append(estadoAtual.estado)
+                    self.listaVisitados.append(estadoAtual.getEstado())
                 borda.pop(0)
             passos+=1
 
@@ -88,7 +85,7 @@ def buscaAgente(self):
                         print("Valor encontrado")
                     fim = time.time()
                     tempoTotal = (fim - inicio)*1000
-                    mostraResultado(estadoAtual,tempoTotal,self.estadoInicial,passos) 
+                    mostraResultado(self,estadoAtual,tempoTotal,self.estadoInicial,passos) 
                     print("")
                     self.iteracoes = False
                     break
@@ -96,20 +93,34 @@ def buscaAgente(self):
             else:
                 borda = estadoAtual.sucessora(estadoAtual,borda,self.tipoBusca,self.tipoProblema,self.estadoFinal,self.listaVisitados,self.limite)
 
-def mostraResultado(resultado,tempoTotal,estadoInicial,passos):
+def mostraResultado(self,resultado,tempoTotal,estadoInicial,passos):
         resultadoAux = resultado
         while(resultado!=None):
-            print(resultado.getEstado())
             print("")
+            if(self.quantidade >0):
+                for item in resultado.getEstado():
+                    print(item)
+            else:
+                print(resultado.getEstado())
             print("Profundida:",resultado.getProfundidade())
             print("Custo:",resultado.getCusto())
             resultado = resultado.pai
         print("")
         print("Estado Inicial")
-        print(estadoInicial.getEstado())
+        if(self.quantidade >0):
+            for item in estadoInicial.getEstado():
+                print(item)
+            print("")
+        else:
+            print(estadoInicial.getEstado())
         print("")
         print("Estado Final")
-        print(resultadoAux.getEstado())
+        if(self.quantidade >0):
+            for item in resultadoAux.getEstado():
+                print(item)
+            print("")
+        else:
+            print(resultadoAux.getEstado())
         print("")
         print("Profundidade Total:",resultadoAux.getProfundidade())
         print("Custo:",resultadoAux.getCusto())
