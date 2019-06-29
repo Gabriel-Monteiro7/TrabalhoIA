@@ -128,7 +128,7 @@ class MapaDaRomenia(No):
                 for item in self.vetorTotal[estado].filho:
                     if(item.getEstado() == pai.getEstado()):
                         custoPai = item.getCusto()
-                super().__init__(self.vetorTotal[estado].getEstado(),pai,custo+custoPai)
+                super().__init__(self.vetorTotal[estado].getEstado(),pai,custo)
             else:
                 super().__init__(self.vetorTotal[estado].getEstado(),pai,custo)
         else:
@@ -139,7 +139,7 @@ class MapaDaRomenia(No):
         aux = expande(self.vetorTotal[estadoAtual.getEstado()])
         random.shuffle(aux)
         for item in aux:
-            borda = tipoBusca.inserir(item.getEstado(),estadoAtual,borda,None,estadoAtual.getCusto(),tipoProblema,listaVisitados,limite)
+            borda = tipoBusca.inserir(item.getEstado(),estadoAtual,borda,None,item.getCusto(),tipoProblema,listaVisitados,limite)
         return borda
 
 

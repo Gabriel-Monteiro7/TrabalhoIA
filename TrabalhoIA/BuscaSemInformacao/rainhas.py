@@ -3,13 +3,13 @@ from copy import deepcopy
 import random
 
 class Rainha(No):
-    def __init__(self,quant,estado = None,pai=None,custo=-1):
+    def __init__(self,quant,estado = None,pai=None,custo=0):
         if(estado==None):
             self.estado = gerarMatriz(quant)
         else:
             self.estado = estado
         self.quant = quant
-        super().__init__(self.estado,pai,custo+1)
+        super().__init__(self.estado,pai,custo)
 
     def testeDeColisao(self,matriz, linha, coluna):
             col = []
@@ -77,7 +77,7 @@ class Rainha(No):
                     vetor.append(estadoMatriz)
         random.shuffle(vetor) 
         for item in vetor:
-            borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,coluna,tipoProblema,listaVisitados,limite)
+            borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,1,tipoProblema,listaVisitados,limite)
         return borda    
     def quantidadeRainhas(self,estadoAtual):
         #Verifica a quantidade de rainhas no tabuleiro

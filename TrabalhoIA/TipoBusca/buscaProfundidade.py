@@ -8,6 +8,6 @@ class BuscaProfundidade:
         #Se tiver atingindo o limite(limitada ou iterativa)
         elif(limite==estadoAtual.getProfundidade()):
             return borda
-        borda.insert(0,tipoProblema(quant,estado, estadoAtual,custo))
+        borda.insert(0,tipoProblema(quant,estado, estadoAtual,custo+estadoAtual.getCusto()))
         return borda
         

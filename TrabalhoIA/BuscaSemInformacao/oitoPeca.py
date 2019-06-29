@@ -24,7 +24,7 @@ class Oitopeca(No):
                     random.shuffle(movimentos)
                     #Aqui se cria os filhos que sao add na borda e o tipo da busca que vai definir a posicao de insercao
                     for item in movimentos:
-                        borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,estadoAtual.getProfundidade()+1,tipoProblema,listaVisitados,limite)
+                        borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,1,tipoProblema,listaVisitados,limite)
                     return borda
        
     def movimento(self,estadoAtual,linha,coluna):

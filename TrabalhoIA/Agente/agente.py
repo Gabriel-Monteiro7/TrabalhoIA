@@ -16,12 +16,12 @@ class Agente():
                 self.listaVisitados = []
             elif(type(self.tipoProfundidade)==int):
                 self.tipoBusca.value = self.tipoBusca.value+" limitada"
-                self.limite-=1
+                self.limite = tipoProfundidade-1
             elif(type(self.tipoProfundidade)  == dict):
                 self.tipoBusca.value = self.tipoBusca.value+" iterativa"
                 self.limite=0
             #Se for iteratica ou limitada ele seta no tipo problema o limite que sera checado na busca em si
-        elif(self.tipoBusca.value == "busca A*"):
+        elif(self.tipoBusca.value == "busca A*" or self.tipoBusca.value == "busca Gulosa"):
             self.listaVisitados = []
         self.tipoProblema = tipoProblema
         self.estadoFinal  = estadoFinal
@@ -47,10 +47,13 @@ def buscaAgente(self):
             #Aqui ele roda ate achar o resultado, se a borda ficar vazia ou atingir uma quantidade de passos
             #Se for vazia ele volta um nivel(profundidade), é mais aplicado ao profundidade iterativo
             if(borda ==[] or passos==1000000):
-                print("Valor não encontrado")
-                print("Limite na quantidade de passos:",passos)
-                self.iteracoes = False
-                break
+                if(borda ==[]):
+                    borda = [aux]
+                else:
+                    print("Valor não encontrado")
+                    print("Limite na quantidade de passos:",passos)
+                    self.iteracoes = False
+                    break
             else:
                 #Senão ele faz o passo a passo do algoritmo, pegar o primeiro da borda
                 #se for profundidade com visitados ele add na lista de visitados
@@ -73,7 +76,7 @@ def buscaAgente(self):
                 not estadoAtual.testeDeObjetividade(estadoAtual,self.estadoFinal,borda)):
                     print("Problema atingiu o limite:",self.limite)
                     aux = estadoAtual
-                    self.limite = 1+estadoAtual.getProfundidade()
+                    self.limite = self.limite+1
                     break
                 #senão ele achou o valor
                 else:

@@ -23,7 +23,7 @@ class OitopecaComInformacao(No):
                     random.shuffle(movimentos)
                     #Aqui se cria os filhos que sao add na borda e o tipo da busca que vai definir a posicao de insercao
                     for item in movimentos:
-                        borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,heuristica(self,item,estadoFinal)+estadoAtual.getProfundidade(),tipoProblema,listaVisitados,limite)
+                        borda = tipoBusca.inserir(item,estadoAtual,borda,self.quant,heuristica(self,item,estadoFinal),tipoProblema,listaVisitados,limite)
                     return borda
        
     def movimento(self,estadoAtual,linha,coluna):
@@ -55,9 +55,14 @@ class OitopecaComInformacao(No):
         return movimento
 
 def heuristica(self,estadoAtual,estadoFinal):
-    local = 0 
+    custo = 0 #Manhattan
+    local = 0 #Euclidean
     for linha in range(self.quant):
         for coluna in range(self.quant):
+            custoAux = estadoAtual[linha][coluna] - estadoFinal.getEstado()[linha][coluna]
+            if(custoAux<0):
+                custoAux*=-1
+            custo+=custoAux
             if(estadoAtual[linha][coluna]!=estadoFinal.getEstado()[linha][coluna]):
                 local+=1
-    return local
+    return custo
