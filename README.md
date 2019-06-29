@@ -8,6 +8,8 @@ O trabalho a seguir descreve um agente para a resolução do problema das N-Rain
 	 - Profundamento iterativo 
 	 - Largura
 	 - Custo uniforme
+	 - Gulosa
+	 - A*
 
 ## Comentários
 
