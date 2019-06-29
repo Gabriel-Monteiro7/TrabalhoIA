@@ -11,7 +11,7 @@ O trabalho a seguir descreve um agente para a resolução do problema das N-Rain
 
 ## Comentários
 
-Este projeto foi construído com o objetivo de desenvolver um agente, o qual seja capaz de resolver um problema genericamente com o uso de algumas buscas, podendo, entretanto, haver alguns erros. 
+Este projeto foi construído com o objetivo de desenvolver um agente, o qual seja capaz de resolver um problema com o uso de algumas buscas, podendo, entretanto, haver alguns erros. 
 
 ## Autor
 
