@@ -32,3 +32,5 @@ class No:
         return self.profundidade
     def getCusto(self):
         return self.custo
+    def setCusto(self,custo):
+        self.custo = custo

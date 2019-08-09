@@ -1,6 +1,7 @@
 #Agente
 from Agente.agente import Agente
 from Agente.agenteLocal import AgenteLocal
+from Agente.agenteGenetico import AgenteGenetico
 
 #Tipo Problema
 from BuscaSemInformacao.rainhas import Rainha
@@ -20,6 +21,9 @@ from TipoBusca.buscaGulosa import BuscaGulosa
 
 from TipoBusca.descidaDaEncosta import DescidaEncosta
 from TipoBusca.recozimentoSimulado import RecozimentoSimulado
+from TipoBusca.algoritmoGenetico import AlgoritmoGenetico
+
+
 
 #Agente(tamanhoDaMatriz,TipoBusca,TipoDaProfundidade ,EstadoInicial,EstadoFinal,TipoProblema)
 
@@ -28,8 +32,8 @@ from TipoBusca.recozimentoSimulado import RecozimentoSimulado
 #BuscaProfundidade tem 3 parametro : []  = lista de visitados. int = limitada. {} = iterativo
 #Se a busca for diferente de Profundidade esse parametro é descatado
 
-# quantidade = 4
-# Agente(quantidade,BuscaProfundidade,{},Rainha(quantidade),None,Rainha)
+# quantidade = 20
+# Agente(quantidade,BuscaProfundidade,None,Rainha(quantidade),None,Rainha)
 
 # quantidade = 8
 # rainha = RainhaLocal(quantidade)
@@ -43,18 +47,30 @@ from TipoBusca.recozimentoSimulado import RecozimentoSimulado
 # ['*', '*', '*', '*', '*', '*', '*', '*']])
 # AgenteLocal(quantidade,DescidaEncosta,rainha,RainhaLocal)
 
-quantidade = 8
-rainha = RainhaLocal(quantidade)
-rainha.setEstado([['*', '*', '*', '*', '*', '*', '*', '*'],
-['*', '*', '*', '*', '*', '*', '*', '*'],
-['*', '*', '*', '*', '*', '*', '*', '*'],
-['*', '*', '*', 'Q', '*', '*', '*', '*'],
-['Q', '*', '*', '*', 'Q', '*', '*', '*'],
-['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
-['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
-['*', '*', '*', '*', '*', '*', '*', '*']])
-AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,8,100,0.9)
-
+# quantidade = 8
+# rainha = RainhaLocal(quantidade)
+# rainha.setEstado([['*', '*', '*', '*', '*', '*', '*', '*'],
+# ['*', '*', '*', '*', '*', '*', '*', '*'],
+# ['*', '*', '*', '*', '*', '*', '*', '*'],
+# ['*', '*', '*', 'Q', '*', '*', '*', '*'],
+# ['Q', '*', '*', '*', 'Q', '*', '*', '*'],
+# ['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
+# ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
+# ['*', '*', '*', '*', '*', '*', '*', '*']])
+# AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,8,100,0.9)
+for item in range(10):
+    print(item)
+    quantidade = 8
+    rainha = RainhaLocal(quantidade)
+    rainha.setEstado([['*', '*', '*', '*', '*', '*', '*', '*'],
+    ['*', '*', '*', '*', '*', '*', '*', '*'],
+    ['*', '*', '*', '*', '*', '*', '*', '*'],
+    ['*', '*', '*', 'Q', '*', '*', '*', '*'],
+    ['Q', '*', '*', '*', 'Q', '*', '*', '*'],
+    ['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
+    ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
+    ['*', '*', '*', '*', '*', '*', '*', '*']])
+    AgenteGenetico(quantidade,AlgoritmoGenetico,rainha,RainhaLocal,30)
 
 # quantidade = 3
 # Agente(quantidade,BuscaA_Estrela,{},OitopecaComInformacao(quantidade,[[8,6,2],[1,7,0],[5,3,4]]),OitopecaComInformacao(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),OitopecaComInformacao)
@@ -64,4 +80,3 @@ AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,8,100,0.9)
 
 # mapaRomenia = MapaDaRomenia()
 # Agente(0,BuscaCustoUniforme,{},MapaDaRomenia(None,mapaRomenia.Arad.estado),MapaDaRomenia(None,mapaRomenia.Bucharest.estado),MapaDaRomenia)
-

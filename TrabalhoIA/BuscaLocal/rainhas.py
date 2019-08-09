@@ -45,7 +45,9 @@ class RainhaLocal(No):
             vetor = [lin, col, principal, secundaria]
             return vetor
 
-    def testePosicao(self,estadoAtual):
+    def testePosicao(self,estadoAtual,quant=None):
+        if(quant!=None):
+            self.quant = quant
         #Aqui ele testa se não existe colisão
         colisaoTotal=0
         auxEstado = deepcopy(estadoAtual)
@@ -61,6 +63,21 @@ class RainhaLocal(No):
                         colisaoTotal+=colisoes
                     auxEstado[coluna][linha] = "*"
         return colisaoTotal
+
+    def sucessora2(self,estadoAtual):
+        #Aqui ele ve quantas rainhas ja existe e 
+        valores = []
+        for linha in range(self.quant):
+            for coluna in range(self.quant):
+                if(estadoAtual.estado[coluna][linha] == "Q"):
+                    for linhaAux in range(self.quant):
+                        aux = deepcopy(estadoAtual.estado)
+                        aux[coluna][linha] = '*'
+                        if(linhaAux!=coluna):
+                            aux[linhaAux][linha] = "Q"
+                            valores.append([aux,self.testePosicao(aux)])
+                    break
+        return valores
 
     def testeDeObjetividade(self):
         if(self.getCusto() <=0):
@@ -82,5 +99,6 @@ class RainhaLocal(No):
                             valores.append([aux,self.testePosicao(aux)])
                     break
         return tipoBusca.inserir(valores,estadoAtual,tipoProblema,self.quant,sucessoresMaximo,temperatura,coeficiente)
+
 
         

@@ -1,41 +1,45 @@
 from copy import deepcopy
 import time
 import random
-class AgenteLocal():
-    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,sucessoresMaximo=None,temperaturaInicial=None,coeficiente = None):
+class AgenteGenetico():
+    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,tamanhoPopulacao=None):
         
         self.tipoBusca = tipoBusca()
         self.tipoProblema = tipoProblema
         self.quantidade = quantidade
         self.estadoInicial = estadoInicial
-        self.sucessoresMaximo = sucessoresMaximo
-        self.temperaturaInicial = temperaturaInicial
-        self.coeficiente = coeficiente
+        self.tamanhoPopulacao = tamanhoPopulacao
         #Inicia o problema
         buscaAgenteLocal(self)
 
 def buscaAgenteLocal(self):
+    estadoInicial = deepcopy(self.estadoInicial)
+    estado=[]
+    for item in range(self.tamanhoPopulacao):
+        valores = estadoInicial.sucessora2(estadoInicial)
+        random.shuffle(valores)
+        estado.append(self.tipoProblema(self.quantidade, valores[0][0], None,valores[0][1]))
     print("Tipo de busca:",self.tipoBusca.value)
     print("Resolvendo o problema...")
     inicio = time.time()
     #Aqui vai executar quantas vezes for necessario
     passos = 0
-    estado = self.estadoInicial
     while(True):
-
-        if(estado.testeDeObjetividade() or passos == 1000):
+        estado.sort(key = lambda custo : custo.getCusto())
+        menor = estado[0]
+        # for item in menor.getEstado():
+        #     print(item,menor.getCusto())
+        # print("")
+        
+        if(menor.testeDeObjetividade() or passos == 5000):
             fim = time.time()
             tempoTotal = (fim - inicio)*1000
-            mostraResultado(self,estado,tempoTotal,self.estadoInicial,passos)
-            if(passos == 1000):
-                print("Entrou num minimo local")
+            mostraResultado(self,menor,tempoTotal,self.estadoInicial,passos)
+            if(passos == 5000):
+                print("Atingiu o Limite")
             break
         else:
-            novoEstado = estado.sucessora(estado,self.tipoBusca,self.tipoProblema,self.sucessoresMaximo,self.temperaturaInicial,self.coeficiente);    
-            if(self.temperaturaInicial!=None):
-                if(passos%self.sucessoresMaximo==0 ):
-                    self.temperaturaInicial = self.temperaturaInicial*self.coeficiente
-            estado = novoEstado
+            estado = self.tipoBusca.inserir(estado,self.quantidade,self.tipoProblema,self.tamanhoPopulacao);   
         passos+=1
 def mostraResultado(self,resultado,tempoTotal,estadoInicial,passos):
         resultadoAux = resultado
