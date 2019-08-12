@@ -10,6 +10,9 @@ O trabalho a seguir descreve um agente para a resolução do problema das N-Rain
 	 - Custo uniforme
 	 - Gulosa
 	 - A*
+	 - Descida da encosta
+	 - Recozimento Simulado
+	 - Algoritmo genético
 
 ## Comentários
 
