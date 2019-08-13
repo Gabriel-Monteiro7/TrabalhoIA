@@ -33,8 +33,7 @@ def buscaAgenteLocal(self):
         else:
             novoEstado = estado.sucessora(estado,self.tipoBusca,self.tipoProblema,self.sucessoresMaximo,self.temperaturaInicial,self.coeficiente);    
             if(self.temperaturaInicial!=None):
-                if(passos%self.sucessoresMaximo==0 ):
-                    self.temperaturaInicial = self.temperaturaInicial*self.coeficiente
+                self.temperaturaInicial = self.temperaturaInicial*self.coeficiente     
             estado = novoEstado
         passos+=1
 def mostraResultado(self,resultado,tempoTotal,estadoInicial,passos):

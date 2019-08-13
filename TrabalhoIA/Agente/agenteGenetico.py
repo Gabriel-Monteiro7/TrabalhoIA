@@ -2,13 +2,14 @@ from copy import deepcopy
 import time
 import random
 class AgenteGenetico():
-    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,tamanhoPopulacao=None):
+    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,tamanhoPopulacao=None,selecao=None):
         
         self.tipoBusca = tipoBusca()
         self.tipoProblema = tipoProblema
         self.quantidade = quantidade
         self.estadoInicial = estadoInicial
         self.tamanhoPopulacao = tamanhoPopulacao
+        self.selecao = selecao
         #Inicia o problema
         buscaAgenteLocal(self)
 
@@ -27,19 +28,19 @@ def buscaAgenteLocal(self):
     while(True):
         estado.sort(key = lambda custo : custo.getCusto())
         menor = estado[0]
-        # for item in menor.getEstado():
-        #     print(item,menor.getCusto())
-        # print("")
+        for item in menor.getEstado():
+            print(item,menor.getCusto())
+        print("")
         
-        if(menor.testeDeObjetividade() or passos == 5000):
+        if(menor.testeDeObjetividade() or passos == 1000):
             fim = time.time()
             tempoTotal = (fim - inicio)*1000
             mostraResultado(self,menor,tempoTotal,self.estadoInicial,passos)
-            if(passos == 5000):
+            if(passos == 1000):
                 print("Atingiu o Limite")
             break
         else:
-            estado = self.tipoBusca.inserir(estado,self.quantidade,self.tipoProblema,self.tamanhoPopulacao);   
+            estado = self.tipoBusca.inserir(estado,self.quantidade,self.tipoProblema,self.tamanhoPopulacao,self.selecao);   
         passos+=1
 def mostraResultado(self,resultado,tempoTotal,estadoInicial,passos):
         resultadoAux = resultado
