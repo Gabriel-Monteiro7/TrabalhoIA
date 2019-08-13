@@ -69,7 +69,7 @@ for item in range(10):
     ['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
     ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
     ['*', '*', '*', '*', '*', '*', '*', '*']])
-    AgenteGenetico(quantidade,AlgoritmoGenetico,rainha,RainhaLocal,100,3)
+    AgenteGenetico(quantidade,AlgoritmoGenetico,rainha,RainhaLocal,30,3)
 
 # quantidade = 3
 # Agente(quantidade,BuscaA_Estrela,{},OitopecaComInformacao(quantidade,[[8,6,2],[1,7,0],[5,3,4]]),OitopecaComInformacao(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),OitopecaComInformacao)

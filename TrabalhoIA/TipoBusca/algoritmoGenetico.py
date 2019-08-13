@@ -13,7 +13,7 @@ class AlgoritmoGenetico:
         melhor = populacao[0]
         melhores =[]
         for item in populacao:
-            if(item.getCusto()==melhor.getCusto()):
+            if(item.getCusto()==melhor.getCusto() and not item in melhores ):
                 melhores.append(item)
             
             # if(melhores.__len__()==tamanhoPopulacao*0.8):
@@ -29,13 +29,14 @@ class AlgoritmoGenetico:
         while(True):
             if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.9)):
                 break
-            escolhidos =[]
+            escolhidos = []
             for repeticao in range(selecao*2):
                 random.shuffle(populacao)
-                escolhidos.append(populacao[0])
+                if(not populacao[0] in escolhidos):
+                    escolhidos.append(populacao[0])
             escolhidos.sort(key = lambda custo : custo.getCusto())
            
-            aux = random.randrange(8)
+            aux = random.randrange(7)
             estado1 = []
             estado2 = []
             for coluna in range(8):
