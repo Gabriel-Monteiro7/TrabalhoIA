@@ -13,11 +13,9 @@ class AlgoritmoGenetico:
         melhor = populacao[0]
         melhores =[]
         for item in populacao:
-            if(item.getCusto()==melhor.getCusto() and not item in melhores ):
+            if(item.getCusto()==melhor.getCusto()):
                 melhores.append(item)
             
-            # if(melhores.__len__()==tamanhoPopulacao*0.8):
-            #     break
         
         while(True):
             indice = random.randrange(melhores.__len__())
@@ -32,8 +30,7 @@ class AlgoritmoGenetico:
             escolhidos = []
             for repeticao in range(selecao*2):
                 random.shuffle(populacao)
-                if(not populacao[0] in escolhidos):
-                    escolhidos.append(populacao[0])
+                escolhidos.append(populacao[0])
             escolhidos.sort(key = lambda custo : custo.getCusto())
            
             aux = random.randrange(7)
@@ -76,8 +73,5 @@ class AlgoritmoGenetico:
             novaPopulacao.append(tipoProblema(quant, valores[0][0], None,valores[0][1]))
             if(novaPopulacao.__len__() == tamanhoPopulacao):
                 break
-        # for item in melhores:
-        #     for item2 in item.getEstado():
-        #         print(item2,item.getCusto())
-        #     print("")
+
         return novaPopulacao

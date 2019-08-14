@@ -17,9 +17,10 @@ def buscaAgenteLocal(self):
     estadoInicial = deepcopy(self.estadoInicial)
     estado=[]
     for item in range(self.tamanhoPopulacao):
-        valores = estadoInicial.sucessora2(estadoInicial)
-        random.shuffle(valores)
-        estado.append(self.tipoProblema(self.quantidade, valores[0][0], None,valores[0][1]))
+        random.shuffle(estadoInicial.getEstado())
+        estadoInicial.setCusto(
+                    estadoInicial.testePosicao(estadoInicial.getEstado()))
+        estado.append(estadoInicial)
     print("Tipo de busca:",self.tipoBusca.value)
     print("Resolvendo o problema...")
     inicio = time.time()
@@ -35,7 +36,7 @@ def buscaAgenteLocal(self):
         if(menor.testeDeObjetividade() or passos == 5000):
             fim = time.time()
             tempoTotal = (fim - inicio)*1000
-            mostraResultado(self,menor,tempoTotal,self.estadoInicial,passos)
+            mostraResultado(self,menor,tempoTotal,estadoInicial,passos)
             if(passos == 5000):
                 print("Atingiu o Limite")
             break
