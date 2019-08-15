@@ -10,22 +10,16 @@ class AlgoritmoGenetico:
     def inserir(self, populacao, quant, tipoProblema, tamanhoPopulacao,selecao):
         novaPopulacao = []
 
-        melhor = populacao[0]
+
         melhores =[]
         for item in populacao:
-            if(item.getCusto()==melhor.getCusto()):
-                melhores.append(item)
-            
-        
-        while(True):
-            indice = random.randrange(melhores.__len__())
-            novaPopulacao.append(melhores[indice])
+            melhores.append(item)
             if(novaPopulacao.__len__() == tamanhoPopulacao*0.1):
                 break
 
         crossOver = []
         while(True):
-            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.9)):
+            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.8)):
                 break
             escolhidos = []
             for repeticao in range(selecao*2):
@@ -64,13 +58,12 @@ class AlgoritmoGenetico:
 
         while(True): 
             escolhidos =[]
+            random.shuffle(populacao)
             for repeticao in range(selecao):
-                random.shuffle(populacao)
-                escolhidos.append(populacao[0])
+                escolhidos.append(populacao[repeticao])
             escolhidos.sort(key = lambda custo : custo.getCusto())
-            valores = item.sucessora2(escolhidos[0])
-            random.shuffle(valores)
-            novaPopulacao.append(tipoProblema(quant, valores[0][0], None,valores[0][1]))
+            escolhidos = escolhidos[0].acharRainha(escolhidos[0],random.randrange(8))
+            novaPopulacao.append(escolhidos)
             if(novaPopulacao.__len__() == tamanhoPopulacao):
                 break
 

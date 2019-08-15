@@ -6,6 +6,8 @@ class RainhaLocal(No):
     def __init__(self,quant,estado = None,pai=None,custo=1000):
         self.estado = estado
         self.quant = quant
+        if(estado==None):
+            self.estado = gerarMatriz(quant)
         super().__init__(self.estado,pai,custo)
 
     def testeDeColisao(self,matriz, linha, coluna):
@@ -53,7 +55,7 @@ class RainhaLocal(No):
         auxEstado = deepcopy(estadoAtual)
         for linha in range(self.quant):
             for coluna in range(self.quant):
-                if(auxEstado[coluna][linha]=='Q'):
+                if(auxEstado[coluna][linha]=="Q"):
                     aux = self.testeDeColisao(auxEstado,coluna,linha)
                     for item in aux:
                         colisoes = -1
@@ -64,20 +66,17 @@ class RainhaLocal(No):
                     auxEstado[coluna][linha] = "*"
         return colisaoTotal
 
-    def sucessora2(self,estadoAtual):
+    def acharRainha(self,estadoAtual,coluna):
         #Aqui ele ve quantas rainhas ja existe e 
-        valores = []
+        
         for linha in range(self.quant):
-            for coluna in range(self.quant):
-                if(estadoAtual.estado[coluna][linha] == "Q"):
-                    for linhaAux in range(self.quant):
-                        aux = deepcopy(estadoAtual.estado)
-                        aux[coluna][linha] = '*'
-                        if(linhaAux!=coluna):
-                            aux[linhaAux][linha] = "Q"
-                            valores.append([aux,self.testePosicao(aux)])
-                    break
-        return valores
+            if(estadoAtual.estado[linha][coluna] == "Q"):
+                estadoAtual.estado[linha][coluna] = '*'
+                break
+         
+        estadoAtual.estado[random.randrange(8)][coluna] = "Q"
+        estadoAtual.setCusto(self.testePosicao(estadoAtual.getEstado(),self.quant))
+        return estadoAtual
 
     def testeDeObjetividade(self):
         if(self.getCusto() <=0):
@@ -99,6 +98,13 @@ class RainhaLocal(No):
                             valores.append([aux,self.testePosicao(aux)])
                     break
         return tipoBusca.inserir(valores,estadoAtual,tipoProblema,self.quant,sucessoresMaximo,temperatura,coeficiente)
-
+def gerarMatriz(quant):
+    matriz = []
+    for c in range(quant):
+        linha = []
+        for l in range(quant):
+            linha.append("*")
+        matriz.append(linha)
+    return matriz
 
         
