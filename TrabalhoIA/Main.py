@@ -58,7 +58,7 @@ from TipoBusca.algoritmoGenetico import AlgoritmoGenetico
 #     ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
 #     ['*', '*', '*', '*', '*', '*', '*', '*']])
 #     AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,2,5000,0.8)
-for item in range(10):
+for item in range(100):
     quantidade = 8
     AgenteGenetico(quantidade,AlgoritmoGenetico,RainhaLocal(quantidade),RainhaLocal,50,3)
 

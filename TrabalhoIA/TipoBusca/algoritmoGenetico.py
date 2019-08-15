@@ -10,16 +10,14 @@ class AlgoritmoGenetico:
     def inserir(self, populacao, quant, tipoProblema, tamanhoPopulacao,selecao):
         novaPopulacao = []
 
-
-        melhores =[]
         for item in populacao:
-            melhores.append(item)
+            novaPopulacao.append(item)
             if(novaPopulacao.__len__() == tamanhoPopulacao*0.1):
                 break
 
         crossOver = []
         while(True):
-            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.8)):
+            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.7)):
                 break
             escolhidos = []
             for repeticao in range(selecao*2):
