@@ -12,12 +12,12 @@ class AlgoritmoGenetico:
 
         for item in populacao:
             novaPopulacao.append(item)
-            if(novaPopulacao.__len__() == tamanhoPopulacao*0.1):
+            if(novaPopulacao.__len__() == tamanhoPopulacao*0.2):
                 break
 
         crossOver = []
         while(True):
-            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.7)):
+            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.9)):
                 break
             escolhidos = []
             for repeticao in range(selecao*2):

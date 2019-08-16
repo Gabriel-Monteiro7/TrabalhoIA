@@ -60,7 +60,7 @@ from TipoBusca.algoritmoGenetico import AlgoritmoGenetico
 #     AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,2,5000,0.8)
 for item in range(100):
     quantidade = 8
-    AgenteGenetico(quantidade,AlgoritmoGenetico,RainhaLocal(quantidade),RainhaLocal,50,3)
+    AgenteGenetico(quantidade,AlgoritmoGenetico,RainhaLocal(quantidade),RainhaLocal,40,3)
 
 # quantidade = 3
 # Agente(quantidade,BuscaA_Estrela,{},OitopecaComInformacao(quantidade,[[8,6,2],[1,7,0],[5,3,4]]),OitopecaComInformacao(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),OitopecaComInformacao)
