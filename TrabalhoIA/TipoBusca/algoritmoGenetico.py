@@ -7,18 +7,16 @@ class AlgoritmoGenetico:
     def __init__(self):
         self.value = "Algoritmo Genético"
 
-    def inserir(self, populacao, quant, tipoProblema, tamanhoPopulacao,selecao):
+    def inserir(self, populacao, quant, tipoProblema, tamanhoPopulacao,selecao,porcentagem):
         novaPopulacao = []
 
         for item in populacao:
             novaPopulacao.append(item)
-            if(novaPopulacao.__len__() == tamanhoPopulacao*0.2):
+            if(novaPopulacao.__len__() == tamanhoPopulacao*porcentagem[0]):
                 break
 
         crossOver = []
-        while(True):
-            if(novaPopulacao.__len__() == int(tamanhoPopulacao*0.9)):
-                break
+        while(novaPopulacao.__len__()<tamanhoPopulacao*(porcentagem[1]+porcentagem[0])):
             escolhidos = []
             for repeticao in range(selecao*2):
                 random.shuffle(populacao)

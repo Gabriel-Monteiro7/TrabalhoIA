@@ -2,7 +2,7 @@ from copy import deepcopy
 import time
 import random
 class AgenteGenetico():
-    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,tamanhoPopulacao=None,selecao=None):
+    def __init__(self,quantidade,tipoBusca,estadoInicial=None,tipoProblema=None,tamanhoPopulacao=None,selecao=None,porcentagem=None):
         
         self.tipoBusca = tipoBusca()
         self.tipoProblema = tipoProblema
@@ -10,6 +10,7 @@ class AgenteGenetico():
         self.estadoInicial = estadoInicial
         self.tamanhoPopulacao = tamanhoPopulacao
         self.selecao = selecao
+        self.porcentagem = porcentagem
         #Inicia o problema
         buscaAgenteLocal(self)
 
@@ -17,12 +18,8 @@ def buscaAgenteLocal(self):
     
     estado=[]
     for item in range(self.tamanhoPopulacao):
-        estadoInicial = deepcopy(self.estadoInicial)
-        for coluna in range(self.quantidade):
-           estadoInicial.estado[random.randrange(8)][coluna] ="Q"
-        estadoInicial.setCusto(estadoInicial.testePosicao(estadoInicial.getEstado(),self.quantidade))
+        estadoInicial = self.estadoInicial.acharRainha(self.estadoInicial,random.randrange(8))
         estado.append(estadoInicial)
-    self.estadoInicial = estado[0];
     print("Tipo de busca:",self.tipoBusca.value)
     print("Resolvendo o problema...")
     inicio = time.time()
@@ -42,12 +39,12 @@ def buscaAgenteLocal(self):
         if(menor.testeDeObjetividade() or passos == 5000):
             fim = time.time()
             tempoTotal = (fim - inicio)*1000
-            mostraResultado(self,menor,tempoTotal,estadoInicial,passos)
+            mostraResultado(self,menor,tempoTotal,self.estadoInicial,passos)
             if(passos == 5000):
                 print("Atingiu o Limite")
             break
         else:
-            estado = self.tipoBusca.inserir(estado,self.quantidade,self.tipoProblema,self.tamanhoPopulacao,self.selecao);   
+            estado = self.tipoBusca.inserir(estado,self.quantidade,self.tipoProblema,self.tamanhoPopulacao,self.selecao,self.porcentagem);   
         passos+=1
 def mostraResultado(self,resultado,tempoTotal,estadoInicial,passos):
         resultadoAux = resultado

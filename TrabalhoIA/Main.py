@@ -34,33 +34,47 @@ from TipoBusca.algoritmoGenetico import AlgoritmoGenetico
 
 # quantidade = 20
 # Agente(quantidade,BuscaProfundidade,None,Rainha(quantidade),None,Rainha)
-
-# quantidade = 8
-# rainha = RainhaLocal(quantidade)
-# rainha.setEstado([['*', '*', '*', '*', '*', '*', '*', '*'],
-# ['*', '*', '*', '*', '*', '*', '*', '*'],
-# ['*', '*', '*', '*', '*', '*', '*', '*'],
-# ['*', '*', '*', 'Q', '*', '*', '*', '*'],
-# ['Q', '*', '*', '*', 'Q', '*', '*', '*'],
-# ['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
-# ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
-# ['*', '*', '*', '*', '*', '*', '*', '*']])
-# AgenteLocal(quantidade,DescidaEncosta,rainha,RainhaLocal)
-# for item in range(100):
+# for item in range(10):
 #     quantidade = 8
 #     rainha = RainhaLocal(quantidade)
-#     rainha.setEstado([['*', '*', '*', '*', '*', '*', '*', '*'],
+#     rainha.setEstado(
+#         [['*', '*', '*', '*', '*', '*', '*', '*'],
 #     ['*', '*', '*', '*', '*', '*', '*', '*'],
 #     ['*', '*', '*', '*', '*', '*', '*', '*'],
 #     ['*', '*', '*', 'Q', '*', '*', '*', '*'],
 #     ['Q', '*', '*', '*', 'Q', '*', '*', '*'],
 #     ['*', 'Q', '*', '*', '*', 'Q', '*', 'Q'],
 #     ['*', '*', 'Q', '*', '*', '*', 'Q', '*'],
-#     ['*', '*', '*', '*', '*', '*', '*', '*']])
-#     AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,2,5000,0.8)
-for item in range(100):
-    quantidade = 8
-    AgenteGenetico(quantidade,AlgoritmoGenetico,RainhaLocal(quantidade),RainhaLocal,40,3)
+#     ['*', '*', '*', '*', '*', '*', '*', '*']]
+
+#     )
+#     AgenteLocal(quantidade,DescidaEncosta,rainha,RainhaLocal)
+
+# for item in range(10):
+#     quantidade = 8
+#     rainha = RainhaLocal(quantidade)
+#     rainha.setEstado(
+#     [['*', '*', '*', '*', '*', '*', 'Q', '*'],
+#     ['*', 'Q', '*', '*', '*', '*', '*', '*'],
+#     ['*', '*', '*', '*', 'Q', '*', '*', '*'],
+#     ['*', '*', '*', '*', '*', '*', '*', '*'],
+#     ['Q', '*', 'Q', '*', '*', '*', '*', '*'],
+#     ['*', '*', '*', '*', '*', '*', '*', 'Q'],
+#     ['*', '*', '*', '*', '*', 'Q', '*', '*'],
+#     ['*', '*', '*', 'Q', '*', '*', '*', '*']] )
+#     AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,3,5000,0.9)
+# for item in range(10):
+#     quantidade = 8
+#     rainha = RainhaLocal(quantidade)
+#     rainha.setEstado([['Q', '*', '*', '*', '*', '*', '*', '*'],
+#     ['*', '*', '*', 'Q', '*', '*', '*', '*'],
+#     ['*', 'Q', '*', '*', '*', '*', '*', 'Q'],
+#     ['*', '*', '*', '*', '*', '*', '*', '*'],
+#     ['*', '*', '*', '*', '*', 'Q', '*', '*'],
+#     ['*', '*', 'Q', '*', '*', '*', '*', '*'],
+#     ['*', '*', '*', '*', '*', '*', 'Q', '*'],
+#     ['*', '*', '*', '*', 'Q', '*', '*', '*']])
+#     AgenteGenetico(quantidade,AlgoritmoGenetico,rainha,RainhaLocal,100,5,[0.1,0.6,0.3])
 
 # quantidade = 3
 # Agente(quantidade,BuscaA_Estrela,{},OitopecaComInformacao(quantidade,[[8,6,2],[1,7,0],[5,3,4]]),OitopecaComInformacao(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),OitopecaComInformacao)
