@@ -18,8 +18,12 @@ def buscaAgenteLocal(self):
     
     estado=[]
     for item in range(self.tamanhoPopulacao):
-        estadoInicial = self.estadoInicial.acharRainha(self.estadoInicial,random.randrange(8))
+        estadoInicial = deepcopy(self.estadoInicial)
+        for coluna in range(self.quantidade):
+           estadoInicial.estado[random.randrange(8)][coluna] ="Q"
+        estadoInicial.setCusto(estadoInicial.testePosicao(estadoInicial.getEstado(),self.quantidade))
         estado.append(estadoInicial)
+    self.estadoInicial = estado[0]
     print("Tipo de busca:",self.tipoBusca.value)
     print("Resolvendo o problema...")
     inicio = time.time()
@@ -28,10 +32,6 @@ def buscaAgenteLocal(self):
     while(True):
         estado.sort(key = lambda custo : custo.getCusto())
         menor = estado[0]
-        # for item in range(self.tamanhoPopulacao):
-        #     for item2 in estado[item].getEstado():
-        #         print(item2)
-        #     print("")
         # for item in menor.getEstado():
         #     print(item,menor.getCusto())
         # print("")

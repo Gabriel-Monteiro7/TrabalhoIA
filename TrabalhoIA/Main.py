@@ -63,18 +63,9 @@ from TipoBusca.algoritmoGenetico import AlgoritmoGenetico
 #     ['*', '*', '*', '*', '*', 'Q', '*', '*'],
 #     ['*', '*', '*', 'Q', '*', '*', '*', '*']] )
 #     AgenteLocal(quantidade,RecozimentoSimulado,rainha,RainhaLocal,3,5000,0.9)
-# for item in range(10):
-#     quantidade = 8
-#     rainha = RainhaLocal(quantidade)
-#     rainha.setEstado([['Q', '*', '*', '*', '*', '*', '*', '*'],
-#     ['*', '*', '*', 'Q', '*', '*', '*', '*'],
-#     ['*', 'Q', '*', '*', '*', '*', '*', 'Q'],
-#     ['*', '*', '*', '*', '*', '*', '*', '*'],
-#     ['*', '*', '*', '*', '*', 'Q', '*', '*'],
-#     ['*', '*', 'Q', '*', '*', '*', '*', '*'],
-#     ['*', '*', '*', '*', '*', '*', 'Q', '*'],
-#     ['*', '*', '*', '*', 'Q', '*', '*', '*']])
-#     AgenteGenetico(quantidade,AlgoritmoGenetico,rainha,RainhaLocal,100,5,[0.1,0.6,0.3])
+for item in range(10):
+    quantidade = 8
+    AgenteGenetico(quantidade,AlgoritmoGenetico,RainhaLocal(quantidade),RainhaLocal,50,3,[0.1,0.7,0.2])
 
 # quantidade = 3
 # Agente(quantidade,BuscaA_Estrela,{},OitopecaComInformacao(quantidade,[[8,6,2],[1,7,0],[5,3,4]]),OitopecaComInformacao(quantidade,[[1,2,3],[4,5,6],[7,8,0]]),OitopecaComInformacao)
